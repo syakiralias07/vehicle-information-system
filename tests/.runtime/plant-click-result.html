@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html><head></head><body><pre id="result">{"slug":"shah-alam-1","initial":null,"actual":"shah-alam-1","label":"Shah Alam 1","count":0}
+{"slug":"shah-alam-2","initial":null,"actual":"shah-alam-2","label":"Shah Alam 2","count":0}
+{"slug":"fif","initial":null,"actual":"fif","label":"FiF","count":3}
+{"slug":"tanjung-malim","initial":null,"actual":"tanjung-malim","label":"Tanjung Malim","count":0}
+{"slug":"rasa","initial":null,"actual":"rasa","label":"Rasa","count":0}
+{"slug":"pegoh","initial":null,"actual":"pegoh","label":"Pegoh","count":0}
+{"slug":"pekan","initial":null,"actual":"pekan","label":"Pekan","count":0}
+ALL PASS</pre><script>
+(async()=>{const out=document.getElementById('result'),lines=[];try{for(const slug of ['shah-alam-1','shah-alam-2','fif','tanjung-malim','rasa','pegoh','pekan']){const f=document.createElement('iframe');document.body.append(f);await new Promise(r=>{f.onload=r;f.src='index.php'});const initial=f.contentWindow.VIS_PLANT;const a=f.contentDocument.querySelector('a.plant-card[href="index.php?plant='+slug+'"]');await new Promise(r=>{f.onload=r;a.click()});await new Promise(r=>setTimeout(r,400));const d=f.contentDocument;const actual=new URL(f.contentWindow.location.href).searchParams.get('plant');const label=d.querySelector('.app-selected-plant')?.textContent;const count=d.querySelectorAll('.model-card').length;lines.push(JSON.stringify({slug,initial,actual,label,count}));if(actual!==slug||count!==(slug==='fif'?3:0))throw Error('Wrong plant '+slug);f.remove()}out.textContent=lines.join('\n')+'\nALL PASS'}catch(e){out.textContent=lines.join('\n')+'\nFAIL '+e.stack}})();
+</script>
+</body></html>

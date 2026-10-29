@@ -1,0 +1,139 @@
+VIS image audit: 200 image files
+
+This ZIP retains original folders; assets/images was not present.
+The PHP now reads real paths recursively. Do not combine or overwrite files yet.
+
+RENAME SUGGESTED: assets/X50/OPL/OPL - PLATE ASSY-RH FRT SIDE MEMBER OTR A6 GMY.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FIREWALL_ASSY_A5_LV_A6_GMY.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/PLATE FRT COMP_MENT CONNECT ASSY LH (A5 LV).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/MID_TUNNEL_ASSY_FL_A3_PRG.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FRONT FLOOR ASSY RH & LH (FL & A3 PRG).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/OPL - SIDE MEMBER BODY ASSY RR FLOOR RH.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/REAR SIDE MEMBER RH & LH.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/MID FLOOR ASSY (FL & PRG).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/CMBR MID FLR FRT LWR MFA #30 (A5 LV).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/SIDE_REINF_BEAM_RH_FL_PRG.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/REAR_END_110_A5_LV_A3_PRG.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FRONT FLOOR ASSY RH & LH (PRG 15D).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/MID TUNNEL ASSY (A5 LV & A6 GMY.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/D PLR GUIDE WATER BOARD LH  A3 .png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/SIDE REINF BEAM RH A5 LV MEX&VIE.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/D PLR GUIDE WATER BOARD RH FL  .png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/D PLR GUIDE WATER BOARD LH .png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/MID FLOOR ASSY (A5 LV).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/SIDE REINF BEAM LH FL & PRG.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/OPL - MID TUNNEL ASS CVT X50 A6 GMY.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/OPL - WHEEL ARCH COVER ASSY LH FRT.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/MID_FLOOR_ASSY_A5_LV_VIETNAM.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FIREWALL_ASSY_FL_A3_PRG.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FIREWALL UPPER ASSY (A5 LV & A6 GMY).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/BEAM_BUMPER_COMP_A5_LV.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/SIDE_REINF_BEAM_LH_A5_LV_VIE.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/OPL - SIDE MEMBER BODY ASSY RR FLOOR LH.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FIREWALL UPPER ASSY (FL & A3 PRG).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/A PILLAR VERTICAL  PABL ASSY RH & LH (A5 LV).png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/FRONT_FLOOR_ASSY_RH_LH_A5_LV_A6_GMY.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/X50/OPL/D PLR GUIDE WATER BOARD RH  A3.png
+  Use X50_OPL_<UNIQUE_NAME> before flattening
+RENAME SUGGESTED: assets/S70/Different part/BRACKET-ESC UPR MODULE 8889760696.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/REINFORCEMENT ASSY-DASH PANEL LWR MASTER PLATE 8889593969.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/S70_MC2_CAD6608584045.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+MOVE SUGGESTED: assets/S70/Different part/S70_MC2_CAD6608584045.jpg
+  This is not AI-MY LV different-part image; move to appropriate model/variant category when organizing
+RENAME SUGGESTED: assets/S70/Different part/SIDE RAIL ASSY-FRT FLOOR LH 8889517042.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/CROSSMEMBER ASSY-FRT COLLISION AVOIDANCE 8892820763.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/8892940049.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/BRACKET ASSY-RH FRT SHOCK ABSORBER 8889516477.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/CROSSMEMBER ASSY-FRT COLLISION AVOIDANCE 8889881158.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/BRACKET ASSY-BRAKE PEDAL MOUNTING 1012042006.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/S70_MC2_CAD6608584044.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+MOVE SUGGESTED: assets/S70/Different part/S70_MC2_CAD6608584044.jpg
+  This is not AI-MY LV different-part image; move to appropriate model/variant category when organizing
+RENAME SUGGESTED: assets/S70/Different part/PANEL ASSY REAR END 8889516597.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/RH RR SIDE MEMBER ASSY 8889515738.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/BRACKET-DUST COVER-STEERING GEAR 1012039025.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/LH A PILLAR INR 8891161140.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/S70_FL_8902582068.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+MOVE SUGGESTED: assets/S70/Different part/S70_FL_8902582068.jpg
+  This is not AI-MY LV different-part image; move to appropriate model/variant category when organizing
+RENAME SUGGESTED: assets/S70/Different part/UPPER PANEL DASH ASSY 6608039627.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/S70_MC_STANDARD.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+MOVE SUGGESTED: assets/S70/Different part/S70_MC_STANDARD.png
+  This is not AI-MY LV different-part image; move to appropriate model/variant category when organizing
+RENAME SUGGESTED: assets/S70/Different part/BRACKET ASSY-LH FRT SHOCK ABSORBER 8889516784.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/PLATE ASSY-DASH PANEL RH CONNECT 8890847644.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/REINFORCEMENT ASSY-DASH PANEL MID TUNNEL 8889521551.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/CROSSMEMBER ASSY-FRT RH SEAT RR 1012039061.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/SIDE MEMBER FRT FLOOR LH LWR 8889515815.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/RH FRT SIDE MEMBER RR BODY ASSY 8889516419.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/PANEL ASSY-DOORSILL INR RH 8889517016.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/PLATE ASSY-DASH PANEL LH CONNECT 1012042017.jpg
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/PLATE ASSY-A PILLAR INR RH 8889726969.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/LH RR SIDE MEMBER ASSY 8889515896.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/LH FRT SIDE MEMBER RR ASSY 8889516352.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/BRACKET ASSY-DASH PANEL HVAC MOUNTING 8889594263.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+RENAME SUGGESTED: assets/S70/Different part/PLATE ASSY-FRT SIDEMEMBER RH FRT 8889737310.png
+  Use S70_AI_MY_LV_<PARTNUMBER> (the original number is often at end)
+TYPO: assets/S70/AI-MY(LV) FLAGSHIP/S70_AI_MY_LV_FLAGSHIP_ENGINE_ROOM_ASS.png
+  Filename ends ASS instead of ASSY; rename to ...ENGINE_ROOM_ASSY.png if diagram verified
+
+Limitations: Must test against localhost database and original site. Image category mapping is conservative.

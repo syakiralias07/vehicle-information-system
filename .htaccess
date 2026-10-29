@@ -1,0 +1,7 @@
+Options -Indexes
+<FilesMatch "^(config\.php|.*\.sql|admin-create-user\.php|migrate-plants\.php|export-live-mysql-to-json\.php|cleanup-google-drive\.php|image_manifest\.json|IMAGE_AUDIT\.txt|README_ADMIN\.md|README_JSON_MIGRATION\.txt)$">
+Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+</IfModule>

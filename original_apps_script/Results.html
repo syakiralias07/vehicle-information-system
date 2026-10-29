@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px 16px 50px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #172033;
+      background: #f2f6fb;
+    }
+
+    .page-container {
+      width: 100%;
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      min-height: 46px;
+      margin-bottom: 24px;
+      padding: 0 20px;
+      border: 1px solid #194776;
+      border-radius: 10px;
+      color: #194776;
+      background: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      color: white;
+      background: #194776;
+    }
+
+    .page-heading {
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: 18px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          #153f72,
+          #28679e
+        );
+      box-shadow:
+        0 12px 35px
+        rgba(24, 66, 108, 0.18);
+    }
+
+    .page-heading h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    .selection-path {
+      margin: 0;
+      color: #dcecff;
+      font-size: 18px;
+    }
+
+    .result-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .summary-chip {
+      padding: 8px 12px;
+      border: 1px solid #cddfed;
+      border-radius: 999px;
+      color: #194776;
+      background: white;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .assembly-section {
+      overflow: hidden;
+      margin-bottom: 32px;
+      border: 1px solid #dce5ef;
+      border-radius: 18px;
+      background: white;
+      box-shadow:
+        0 10px 30px
+        rgba(31, 68, 112, 0.10);
+    }
+
+    .assembly-title {
+      margin: 0;
+      padding: 20px 25px;
+      color: white;
+      background: #194776;
+      font-size: 24px;
+    }
+
+    .overview-area {
+      padding: 24px;
+      background: #eef3f8;
+    }
+
+    .overview-card {
+      overflow: hidden;
+      border: 1px solid #dce5ef;
+      border-radius: 14px;
+      background: white;
+    }
+
+    .overview-card + .overview-card {
+      margin-top: 26px;
+    }
+
+    .overview-image-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 360px;
+      padding: 18px;
+      background: #f5f7fa;
+    }
+
+    .overview-image {
+      display: block;
+      width: 100%;
+      max-width: 1200px;
+      max-height: 900px;
+      object-fit: contain;
+      border-radius: 8px;
+      cursor: zoom-in;
+    }
+
+    .actual-part-card {
+      border: 2px solid #efb768;
+    }
+
+    .actual-part-card .overview-image-container {
+      min-height: 480px;
+      padding: 26px;
+      background: #fffaf2;
+    }
+
+    .actual-part-card .overview-image {
+      max-height: 980px;
+    }
+
+    .actual-part-card .overview-information {
+      border-top: 1px solid #f2d3a8;
+      background: #fffaf2;
+    }
+
+    .actual-part-card .overview-information h3 {
+      color: #8a4b08;
+    }
+
+    .actual-part-card .overview-label {
+      color: #8a4b08;
+      background: #ffe9c7;
+    }
+
+    .overview-information {
+      padding: 20px 24px;
+    }
+
+    .overview-information h3 {
+      margin: 0 0 10px;
+      color: #194776;
+      font-size: 23px;
+    }
+
+    .overview-information p {
+      margin: 0;
+      color: #65758a;
+      line-height: 1.6;
+    }
+
+    .overview-label {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      color: #245689;
+      background: #eaf3fc;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .part-lists-area {
+      padding: 24px;
+    }
+
+    .part-list-block + .part-list-block {
+      margin-top: 30px;
+    }
+
+    .list-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 0 0 14px;
+      padding: 13px 16px;
+      border-left: 5px solid #194776;
+      border-radius: 9px;
+      color: #194776;
+      background: #edf4fb;
+    }
+
+    .list-heading h3 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .list-count {
+      color: #61758b;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid #dde5ee;
+      border-radius: 12px;
+    }
+
+    .parts-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    .parts-table th {
+      padding: 14px;
+      color: #32445c;
+      background: #f4f7fa;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .parts-table td {
+      padding: 13px 14px;
+      border-top: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+
+    .parts-table tbody tr:hover td {
+      background: #f8fbff;
+    }
+
+    .picture-column {
+      width: 145px;
+    }
+
+    .number-column {
+      width: 220px;
+    }
+
+    .small-part-image {
+      display: block;
+      width: 115px;
+      height: 82px;
+      object-fit: contain;
+      border: 1px solid #e1e6ec;
+      border-radius: 8px;
+      background: white;
+      cursor: zoom-in;
+    }
+
+    .overview-image-container .no-image {
+      width: 100%;
+      min-height: 320px;
+      height: auto;
+      font-size: 15px;
+    }
+
+    .no-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 115px;
+      height: 82px;
+      border-radius: 8px;
+      color: #8290a3;
+      background: #edf1f5;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .part-name {
+      color: #183f6f;
+      font-weight: 700;
+    }
+
+    .part-number {
+      color: #334a67;
+      font-weight: 700;
+    }
+
+    .assembly-tagging {
+      padding: 0 18px 22px;
+      background: #edf4fb;
+    }
+
+    .assembly-tagging-panel {
+      overflow: hidden;
+      border: 1px solid #dce5ef;
+      border-radius: 15px;
+      background: white;
+    }
+
+    .assembly-tagging-heading {
+      padding: 18px 20px;
+      border-bottom: 1px solid #dce5ef;
+      background: #f7faff;
+    }
+
+    .assembly-tagging-heading h3 {
+      margin: 0 0 6px;
+      color: #194776;
+      font-size: 21px;
+    }
+
+    .assembly-tagging-heading p {
+      margin: 0;
+      color: #66778d;
+      line-height: 1.5;
+    }
+
+    .tag-print-requirement {
+      margin: 18px 18px 0;
+      overflow: hidden;
+      border: 1px solid #c9dcec;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow:
+        0 6px 18px
+        rgba(31, 68, 112, 0.07);
+    }
+
+    .tag-print-requirement-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      color: #ffffff;
+      background:
+        linear-gradient(
+          135deg,
+          #153f72,
+          #28679e
+        );
+    }
+
+    .tag-print-requirement-header h4 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .tag-print-status {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border: 1px solid
+        rgba(255,255,255,0.55);
+      border-radius: 999px;
+      color: #ffffff;
+      background:
+        rgba(255,255,255,0.14);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      text-transform: uppercase;
+    }
+
+    .tag-print-intro {
+      margin: 0;
+      padding: 13px 16px 0;
+      color: #607287;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .tag-paper-detail-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 13px 16px 14px;
+    }
+
+    .tag-paper-detail {
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid #dce6ef;
+      border-radius: 10px;
+      background: #f9fbfd;
+    }
+
+    .tag-paper-detail-label {
+      display: block;
+      margin-bottom: 5px;
+      color: #718096;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .tag-paper-detail-value {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 22px;
+      color: #183f6f;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .tag-paper-swatch {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      border: 2px solid #475569;
+      border-radius: 50%;
+      background: var(
+        --tag-paper-swatch,
+        #ffffff
+      );
+      box-shadow:
+        0 0 0 2px #ffffff;
+    }
+
+    .tag-print-instruction {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin: 0;
+      padding: 11px 16px;
+      border-top: 1px solid #dce6ef;
+      color: #244f78;
+      background: #eef6fc;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .tag-print-instruction-icon {
+      flex: 0 0 auto;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .tag-paper-missing {
+      color: #8a5a08;
+      background: #fff8e8;
+    }
+
+    .assembly-tagging-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .assembly-tagging-card {
+      overflow: hidden;
+      border: 1px solid #dce5ef;
+      border-radius: 13px;
+      background: white;
+    }
+
+    .assembly-tagging-card-title {
+      margin: 0;
+      padding: 14px 16px;
+      color: white;
+      background: #194776;
+      font-size: 17px;
+      text-align: center;
+    }
+
+    .assembly-tagging-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      padding: 14px;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f6f8fb;
+    }
+
+    .assembly-tagging-image img {
+      display: block;
+      width: 100%;
+      height: 250px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: white;
+      cursor: zoom-in;
+    }
+
+    .assembly-tagging-information {
+      padding: 15px 16px;
+    }
+
+    .assembly-tagging-type {
+      display: inline-block;
+      margin-bottom: 9px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #194776;
+      background: #e8f1fb;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .assembly-tagging-description {
+      margin: 0;
+      color: #627288;
+      line-height: 1.55;
+    }
+
+    .loading-message,
+    .error-message,
+    .empty-message {
+      padding: 35px;
+      border-radius: 14px;
+      text-align: center;
+      background: white;
+    }
+
+    .error-message {
+      color: #b42318;
+      background: #fff1f1;
+      border: 1px solid #ffc7c7;
+    }
+
+    .empty-message {
+      color: #805b10;
+      background: #fff9e9;
+      border: 1px solid #eed895;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      vertical-align: middle;
+      border: 4px solid #d6e4f2;
+      border-top-color: #194776;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 24px 92px;
+      background: rgba(9, 24, 42, 0.92);
+    }
+
+    .image-modal.open {
+      display: flex;
+    }
+
+    .modal-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .modal-viewport.dragging {
+      cursor: grabbing;
+    }
+
+    .modal-pan-layer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+    }
+
+    .modal-image {
+      display: block;
+      max-width: 96vw;
+      max-height: calc(100vh - 180px);
+      object-fit: contain;
+      border-radius: 10px;
+      background: white;
+      box-shadow:
+        0 12px 34px
+        rgba(0, 0, 0, 0.32);
+      transform: scale(1);
+      transform-origin: center center;
+      transition: transform 0.14s ease;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
+    }
+
+    .modal-close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      z-index: 1003;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,0.50);
+      border-radius: 50%;
+      color: white;
+      background: rgba(255,255,255,0.14);
+      font-size: 29px;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.24);
+    }
+
+    .modal-zoom-controls {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 1003;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px;
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 999px;
+      background: rgba(17, 42, 70, 0.94);
+      box-shadow:
+        0 10px 28px
+        rgba(0, 0, 0, 0.28);
+      transform: translateX(-50%);
+    }
+
+    .modal-zoom-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      height: 42px;
+      padding: 0 13px;
+      border: 1px solid rgba(255,255,255,0.38);
+      border-radius: 999px;
+      color: white;
+      background: rgba(255,255,255,0.12);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .modal-zoom-button:hover,
+    .modal-zoom-button:focus-visible {
+      outline: none;
+      background: rgba(255,255,255,0.24);
+    }
+
+    .modal-zoom-symbol {
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .modal-zoom-level {
+      min-width: 62px;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .modal-zoom-help {
+      position: fixed;
+      top: 22px;
+      left: 24px;
+      z-index: 1002;
+      padding: 9px 13px;
+      border-radius: 999px;
+      color: white;
+      background: rgba(17, 42, 70, 0.82);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .image-modal {
+        padding:
+          66px 10px 84px;
+      }
+
+      .modal-image {
+        max-width: 98vw;
+        max-height:
+          calc(100vh - 165px);
+      }
+
+      .modal-zoom-controls {
+        bottom: 14px;
+        gap: 6px;
+        padding: 7px;
+      }
+
+      .modal-zoom-button {
+        min-width: 40px;
+        height: 40px;
+        padding: 0 10px;
+      }
+
+      .modal-zoom-level {
+        min-width: 54px;
+      }
+
+      .modal-zoom-help {
+        top: 18px;
+        left: 12px;
+        max-width: calc(100vw - 88px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 16px 10px 35px;
+      }
+
+      .page-heading {
+        padding: 22px;
+      }
+
+      .page-heading h1 {
+        font-size: 27px;
+      }
+
+      .overview-area,
+      .part-lists-area {
+        padding: 14px;
+      }
+
+      .overview-image-container {
+        min-height: 240px;
+        padding: 10px;
+      }
+
+      .actual-part-card .overview-image-container {
+        min-height: 300px;
+        padding: 14px;
+      }
+
+      .assembly-title {
+        padding: 17px 18px;
+        font-size: 20px;
+      }
+
+      .assembly-tagging {
+        padding: 0 14px 18px;
+      }
+
+      .assembly-tagging-grid {
+        grid-template-columns: 1fr;
+        padding: 14px;
+      }
+
+      .assembly-tagging-image {
+        min-height: 220px;
+      }
+
+      .assembly-tagging-image img {
+        height: 210px;
+      }
+
+      .tag-print-requirement {
+        margin: 14px 14px 0;
+      }
+
+      .tag-print-requirement-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 13px 14px;
+      }
+
+      .tag-paper-detail-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+        padding: 12px 14px;
+      }
+
+      .tag-print-intro,
+      .tag-print-instruction {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .list-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  
+    @media (max-width: 430px) {
+      .tag-paper-detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tag-print-requirement-header h4 {
+        font-size: 15px;
+      }
+    }
+
+    /* Floating Go to Top button */
+    .global-back-to-top-button {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 112px;
+      min-height: 48px;
+      padding: 0 17px;
+      border: 2px solid #ffffff;
+      border-radius: 999px;
+      color: #ffffff;
+      background: #194776;
+      box-shadow:
+        0 10px 28px
+        rgba(25, 71, 118, 0.30);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px);
+      transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .global-back-to-top-button.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .global-back-to-top-button:hover,
+    .global-back-to-top-button:focus-visible {
+      outline: none;
+      background: #28679e;
+    }
+
+    .global-back-to-top-arrow {
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    @media (max-width: 700px) {
+      .global-back-to-top-button {
+        right: 14px;
+        bottom: 14px;
+        min-width: 52px;
+        min-height: 52px;
+        padding: 0;
+      }
+
+      .global-back-to-top-text {
+        display: none;
+      }
+    }
+
+
+    /* Simplified red-marking legend */
+    .diagram-legend {
+      margin: 0 18px 18px;
+      overflow: hidden;
+      border: 1px solid #f0b6b6;
+      border-radius: 13px;
+      background: #fffafa;
+      box-shadow:
+        0 6px 16px
+        rgba(157, 33, 33, 0.07);
+    }
+
+    .diagram-legend-header {
+      padding: 13px 16px;
+      border-bottom: 1px solid #f3cccc;
+      background: #fff1f1;
+    }
+
+    .diagram-legend-title {
+      margin: 0;
+      color: #8f1d1d;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .diagram-selection-summary {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px 16px 0;
+    }
+
+    .diagram-selection-box {
+      padding: 10px 12px;
+      border: 1px solid #ead4d4;
+      border-radius: 10px;
+      background: white;
+    }
+
+    .diagram-selection-box span {
+      display: block;
+      margin-bottom: 3px;
+      color: #7a8797;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .diagram-selection-box strong {
+      display: block;
+      color: #183f6f;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .diagram-legend-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px 16px;
+    }
+
+    .diagram-legend-item {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 11px;
+      align-items: center;
+      min-height: 66px;
+      padding: 11px;
+      border: 1px solid #f2d4d4;
+      border-radius: 11px;
+      background: white;
+    }
+
+    .diagram-legend-symbol {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+    }
+
+    .red-dashed-symbol {
+      width: 46px;
+      height: 30px;
+      border: 3px dashed #e32636;
+      border-radius: 4px;
+      background: #fffafa;
+    }
+
+    .red-label-symbol {
+      color: #e32636;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: center;
+      white-space: pre-line;
+    }
+
+    .diagram-legend-copy strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #8f1d1d;
+      font-size: 13px;
+    }
+
+    .diagram-legend-copy span {
+      display: block;
+      color: #65758a;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .diagram-label-guide {
+      padding: 0 16px 12px;
+    }
+
+    .diagram-label-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .diagram-label-chip {
+      padding: 6px 9px;
+      border: 1px solid #efc5c5;
+      border-radius: 999px;
+      color: #8f1d1d;
+      background: white;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .diagram-legend-note {
+      margin: 0;
+      padding: 9px 16px;
+      border-top: 1px solid #f3d2d2;
+      color: #65758a;
+      background: #fffdfd;
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .diagram-legend-note strong {
+      color: #183f6f;
+    }
+
+    @media (max-width: 700px) {
+      .diagram-legend {
+        margin: 0 10px 14px;
+      }
+
+      .diagram-selection-summary,
+      .diagram-legend-grid {
+        grid-template-columns: 1fr;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .diagram-label-guide,
+      .diagram-legend-note {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    }
+
+  </style>
+
+  <?!= include('Theme'); ?>
+</head>
+
+<body>
+
+  <div class="page-container">
+
+    <button
+      class="back-button"
+      type="button"
+      onclick="returnHome()"
+    >
+      ← Back to Module Selection
+    </button>
+
+    <header class="page-heading">
+      <h1>Assembly Overview</h1>
+
+      <p
+        id="selectionPath"
+        class="selection-path"
+      ></p>
+    </header>
+
+    <div
+      id="resultSummary"
+      class="result-summary"
+    ></div>
+
+    <main id="results">
+      <div class="loading-message">
+        <span class="spinner"></span>
+        Loading overview pictures...
+      </div>
+    </main>
+
+  </div>
+
+  <div
+    id="imageModal"
+    class="image-modal"
+    onclick="closeImageModal(event)"
+  >
+    <div class="modal-zoom-help">
+      Use + / − or mouse wheel. Drag to move the enlarged picture.
+    </div>
+
+    <button
+      class="modal-close"
+      type="button"
+      aria-label="Close image"
+      title="Close"
+      onclick="closeImageModal(event)"
+    >
+      ×
+    </button>
+
+    <div
+      id="modalViewport"
+      class="modal-viewport"
+      onclick="event.stopPropagation()"
+    >
+      <div
+        id="modalPanLayer"
+        class="modal-pan-layer"
+      >
+        <img
+          id="modalImage"
+          class="modal-image"
+          alt="Enlarged part picture"
+          draggable="false"
+        >
+      </div>
+    </div>
+
+    <div
+      class="modal-zoom-controls"
+      onclick="event.stopPropagation()"
+    >
+      <button
+        class="modal-zoom-button"
+        type="button"
+        aria-label="Zoom out"
+        title="Zoom out"
+        onclick="zoomModalImage(-0.25)"
+      >
+        <span class="modal-zoom-symbol">−</span>
+      </button>
+
+      <span
+        id="modalZoomLevel"
+        class="modal-zoom-level"
+      >
+        100%
+      </span>
+
+      <button
+        class="modal-zoom-button"
+        type="button"
+        aria-label="Zoom in"
+        title="Zoom in"
+        onclick="zoomModalImage(0.25)"
+      >
+        <span class="modal-zoom-symbol">+</span>
+      </button>
+
+      <button
+        class="modal-zoom-button"
+        type="button"
+        title="Reset zoom"
+        onclick="resetModalZoom()"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const WEB_APP_URL =
+      <?!= JSON.stringify(webAppUrl) ?>;
+
+    const SELECTED_MODEL =
+      <?!= JSON.stringify(selectedModel) ?>;
+
+    const SELECTED_VARIANT =
+      <?!= JSON.stringify(selectedVariant) ?>;
+
+    const SELECTED_GRADE =
+      <?!= JSON.stringify(selectedGrade) ?>;
+
+    const SELECTED_MODULE =
+      <?!= JSON.stringify(selectedModule) ?>;
+
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      function () {
+        setupModalZoomControls();
+        loadResults();
+      }
+    );
+
+
+    function loadResults() {
+      document.getElementById(
+        'selectionPath'
+      ).textContent =
+        SELECTED_MODEL +
+        ' → ' +
+        SELECTED_VARIANT +
+        ' → ' +
+        SELECTED_GRADE +
+        ' → ' +
+        SELECTED_MODULE;
+
+      if (
+        !SELECTED_MODEL ||
+        !SELECTED_VARIANT ||
+        !SELECTED_GRADE ||
+        !SELECTED_MODULE
+      ) {
+        showError(
+          'Selection information is incomplete.'
+        );
+
+        return;
+      }
+
+      google.script.run
+        .withSuccessHandler(displayResults)
+        .withFailureHandler(function (error) {
+          showError(
+            error && error.message
+              ? error.message
+              : 'Unable to load the information.'
+          );
+        })
+        .getParts(
+          SELECTED_MODEL,
+          SELECTED_VARIANT,
+          SELECTED_GRADE,
+          SELECTED_MODULE
+        );
+    }
+
+
+    function displayResults(response) {
+      const results =
+        document.getElementById('results');
+
+      const summary =
+        document.getElementById(
+          'resultSummary'
+        );
+
+      results.innerHTML = '';
+      summary.innerHTML = '';
+
+      if (!response || !response.found) {
+        const emptyMessage =
+          document.createElement('div');
+
+        emptyMessage.className =
+          'empty-message';
+
+        emptyMessage.textContent =
+          response && response.message
+            ? response.message
+            : 'No matching information was found.';
+
+        results.appendChild(
+          emptyMessage
+        );
+
+        return;
+      }
+
+      appendSummaryChip(
+        summary,
+        response.assemblyCount +
+        (
+          response.assemblyCount === 1
+            ? ' assembly'
+            : ' assemblies'
+        )
+      );
+
+      appendSummaryChip(
+        summary,
+        response.totalPictures +
+        (
+          response.totalPictures === 1
+            ? ' picture'
+            : ' pictures'
+        )
+      );
+
+      if (response.taggingCount > 0) {
+        appendSummaryChip(
+          summary,
+          response.taggingCount +
+          (
+            response.taggingCount === 1
+              ? ' tagging example'
+              : ' tagging examples'
+          )
+        );
+      }
+
+      /*
+       * Required page order:
+       * 1. Normal OVERVIEW_DATABASE information
+       * 2. VARIANT_TAGGING information
+       * 3. OPL records from OVERVIEW_DATABASE
+       */
+      const contentGroups =
+        separateResultContent(
+          response.assemblies || []
+        );
+
+      contentGroups.overviewAssemblies
+        .forEach(function (assembly) {
+          renderAssemblySection(
+            results,
+            assembly,
+            'overview'
+          );
+        });
+
+      if (
+        response.taggingExamples &&
+        response.taggingExamples.length > 0
+      ) {
+        renderStandaloneTagging(
+          results,
+          response.taggingExamples,
+          response.tagPaperRequirement
+        );
+      }
+
+      contentGroups.oplAssemblies
+        .forEach(function (assembly) {
+          renderAssemblySection(
+            results,
+            assembly,
+            'opl'
+          );
+        });
+    }
+
+
+    function separateResultContent(
+      assemblies
+    ) {
+      const overviewAssemblies = [];
+      const oplAssemblies = [];
+
+      assemblies.forEach(function (
+        assembly
+      ) {
+        const normalItems = [];
+        const oplItems = [];
+
+        (assembly.overview || [])
+          .forEach(function (item) {
+            if (isOplOverviewItem(item)) {
+              oplItems.push(item);
+            } else {
+              normalItems.push(item);
+            }
+          });
+
+        if (normalItems.length > 0) {
+          overviewAssemblies.push({
+            assemblyName:
+              assembly.assemblyName,
+            sortOrder:
+              assembly.sortOrder,
+            overview:
+              normalItems
+          });
+        }
+
+        if (oplItems.length > 0) {
+          oplAssemblies.push({
+            assemblyName:
+              assembly.assemblyName,
+            sortOrder:
+              assembly.sortOrder,
+            overview:
+              oplItems
+          });
+        }
+      });
+
+      return {
+        overviewAssemblies:
+          overviewAssemblies,
+        oplAssemblies:
+          oplAssemblies
+      };
+    }
+
+
+    function isOplOverviewItem(item) {
+      const pictureName =
+        String(
+          item && item.pictureName
+            ? item.pictureName
+            : ''
+        )
+          .trim()
+          .toUpperCase();
+
+      return (
+        pictureName === 'OPL' ||
+        pictureName.indexOf('OPL -') === 0 ||
+        pictureName.indexOf('OPL:') === 0
+      );
+    }
+
+
+    function renderAssemblySection(
+      results,
+      assembly,
+      contentType
+    ) {
+      const section =
+        document.createElement('section');
+
+      section.className =
+        'assembly-section';
+
+      const assemblyTitle =
+        document.createElement('h2');
+
+      assemblyTitle.className =
+        'assembly-title';
+
+      let titleText =
+        assembly.assemblyName ||
+        'Assembly';
+
+      if (
+        contentType === 'opl' &&
+        String(titleText)
+          .trim()
+          .toUpperCase()
+          .indexOf('OPL') !== 0
+      ) {
+        titleText =
+          'OPL — ' + titleText;
+      }
+
+      assemblyTitle.textContent =
+        titleText;
+
+      section.appendChild(
+        assemblyTitle
+      );
+
+      renderOverview(
+        section,
+        assembly,
+        contentType
+      );
+
+      results.appendChild(
+        section
+      );
+    }
+
+
+    function renderStandaloneTagging(
+      results,
+      examples,
+      paperRequirement
+    ) {
+      const section =
+        document.createElement('section');
+
+      section.className =
+        'assembly-section';
+
+      const title =
+        document.createElement('h2');
+
+      title.className =
+        'assembly-title';
+
+      title.textContent =
+        'Tagging Information';
+
+      section.appendChild(title);
+
+      renderAssemblyTagging(
+        section,
+        examples,
+        paperRequirement
+      );
+
+      results.appendChild(section);
+    }
+
+
+    function renderOverview(
+      section,
+      assembly,
+      contentType
+    ) {
+      const overviewArea =
+        document.createElement('div');
+
+      overviewArea.className =
+        'overview-area';
+
+      if (
+        !assembly.overview ||
+        assembly.overview.length === 0
+      ) {
+        overviewArea.innerHTML =
+          '<div class="empty-message">' +
+            'No overview record was found.' +
+          '</div>';
+
+        section.appendChild(
+          overviewArea
+        );
+
+        return;
+      }
+
+      const isOplSection =
+        contentType === 'opl';
+
+      assembly.overview.forEach(function (
+        overview,
+        overviewIndex
+      ) {
+        const overviewCard =
+          document.createElement('article');
+
+        overviewCard.className =
+          isOplSection || overviewIndex > 0
+            ? 'overview-card actual-part-card'
+            : 'overview-card';
+
+        const imageContainer =
+          document.createElement('div');
+
+        imageContainer.className =
+          'overview-image-container';
+
+        appendImageOrPlaceholder(
+          imageContainer,
+          overview.imageUrl,
+          overview.pictureName,
+          'overview-image'
+        );
+
+        const information =
+          document.createElement('div');
+
+        information.className =
+          'overview-information';
+
+        const name =
+          document.createElement('h3');
+
+        name.textContent =
+          overview.pictureName ||
+          assembly.assemblyName;
+
+        information.appendChild(name);
+
+        if (overview.description) {
+          const description =
+            document.createElement('p');
+
+          description.textContent =
+            overview.description;
+
+          information.appendChild(
+            description
+          );
+        }
+
+        const label =
+          document.createElement('span');
+
+        label.className =
+          'overview-label';
+
+        label.textContent =
+          isOplSection
+            ? 'OPL'
+            : (
+                overviewIndex === 0
+                  ? 'OVERVIEW'
+                  : 'ACTUAL PART'
+              );
+
+        information.appendChild(label);
+
+        overviewCard.appendChild(
+          imageContainer
+        );
+
+        if (
+          !isOplSection &&
+          shouldShowDiagramLegend(
+            overview
+          )
+        ) {
+          try {
+            overviewCard.appendChild(
+              buildDiagramLegend()
+            );
+          } catch (legendError) {
+            console.error(
+              'Unable to render diagram legend:',
+              legendError
+            );
+          }
+        }
+
+        overviewCard.appendChild(
+          information
+        );
+
+        overviewArea.appendChild(
+          overviewCard
+        );
+      });
+
+      section.appendChild(
+        overviewArea
+      );
+    }
+
+
+
+    function shouldShowDiagramLegend(
+      overview
+    ) {
+      /*
+       * The Google Sheet now controls the legend per picture.
+       * OVERVIEW_DATABASE → Show Legend = Yes/No
+       */
+      return Boolean(
+        overview &&
+        overview.showLegend === true
+      );
+    }
+
+
+    function buildDiagramLegend() {
+      const legendContext =
+        getDiagramLegendContext();
+
+      const legend =
+        document.createElement('aside');
+
+      legend.className =
+        'diagram-legend';
+
+      legend.setAttribute(
+        'aria-label',
+        'Red marking legend'
+      );
+
+      const header =
+        document.createElement('div');
+
+      header.className =
+        'diagram-legend-header';
+
+      const title =
+        document.createElement('h4');
+
+      title.className =
+        'diagram-legend-title';
+
+      title.textContent =
+        'Red Marking Legend';
+
+      header.appendChild(title);
+
+      const selectionSummary =
+        document.createElement('div');
+
+      selectionSummary.className =
+        'diagram-selection-summary';
+
+      selectionSummary.appendChild(
+        buildDiagramSelectionBox(
+          'Comparison Baseline',
+          legendContext.baselineLabel
+        )
+      );
+
+      selectionSummary.appendChild(
+        buildDiagramSelectionBox(
+          'Current Selection',
+          legendContext.currentSelection
+        )
+      );
+
+      const grid =
+        document.createElement('div');
+
+      grid.className =
+        'diagram-legend-grid';
+
+      grid.appendChild(
+        buildDiagramLegendItem(
+          'red-dashed-symbol',
+          '',
+          'Red Dashed Box',
+          'Part or assembly differs from the ' +
+            legendContext.baselineLabel +
+            '.'
+        )
+      );
+
+      grid.appendChild(
+        buildDiagramLegendItem(
+          'red-label-symbol',
+          legendContext.symbolText,
+          'Red Label',
+          'Shows which variant, grade or market the highlighted difference applies to.'
+        )
+      );
+
+      const guide =
+        document.createElement('div');
+
+      guide.className =
+        'diagram-label-guide';
+
+      const chips =
+        document.createElement('div');
+
+      chips.className =
+        'diagram-label-chips';
+
+      (legendContext.chips || [])
+        .forEach(function (labelText) {
+          const chip =
+            document.createElement('span');
+
+          chip.className =
+            'diagram-label-chip';
+
+          chip.textContent =
+            labelText;
+
+          chips.appendChild(chip);
+        });
+
+      guide.appendChild(chips);
+
+      const note =
+        document.createElement('p');
+
+      note.className =
+        'diagram-legend-note';
+
+      const noteStrong =
+        document.createElement('strong');
+
+      noteStrong.textContent =
+        'No red marking: ';
+
+      const noteText =
+        document.createTextNode(
+          'follows the ' +
+          legendContext.baselineLabel +
+          '. Red markings identify specification differences only, not defects or rejection.'
+        );
+
+      note.appendChild(noteStrong);
+      note.appendChild(noteText);
+
+      legend.appendChild(header);
+      legend.appendChild(
+        selectionSummary
+      );
+      legend.appendChild(grid);
+      legend.appendChild(guide);
+      legend.appendChild(note);
+
+      return legend;
+    }
+
+
+    function buildDiagramSelectionBox(
+      labelText,
+      valueText
+    ) {
+      const box =
+        document.createElement('div');
+
+      box.className =
+        'diagram-selection-box';
+
+      const label =
+        document.createElement('span');
+
+      label.textContent =
+        labelText;
+
+      const value =
+        document.createElement('strong');
+
+      value.textContent =
+        valueText || '—';
+
+      box.appendChild(label);
+      box.appendChild(value);
+
+      return box;
+    }
+
+
+    function getDiagramLegendContext() {
+      const model =
+        String(SELECTED_MODEL || '').trim();
+
+      const variant =
+        String(SELECTED_VARIANT || '').trim();
+
+      const grade =
+        String(SELECTED_GRADE || '').trim();
+
+      const modelUpper =
+        model.toUpperCase();
+
+      const variantUpper =
+        variant.toUpperCase();
+
+      const gradeUpper =
+        grade.toUpperCase();
+
+      const currentSelection =
+        [model, variant, grade]
+          .filter(Boolean)
+          .join(' — ');
+
+      let baselineLabel =
+        'Standard Specification';
+
+      if (modelUpper === 'X50') {
+        baselineLabel =
+          'X50 FL Standard';
+      } else if (modelUpper === 'S70') {
+        baselineLabel =
+          'S70 MC Standard';
+      }
+
+      let displayLabel =
+        variantUpper ||
+        modelUpper ||
+        'SELECTED SPECIFICATION';
+
+      const isX50LvMarket =
+        modelUpper === 'X50' &&
+        variantUpper === 'A5 LV' &&
+        (
+          gradeUpper === 'VIETNAM' ||
+          gradeUpper === 'MEXICO'
+        );
+
+      const isS70LvGrade =
+        modelUpper === 'S70' &&
+        variantUpper === 'AI-MY(LV)' &&
+        (
+          gradeUpper === 'EXECUTIVE' ||
+          gradeUpper === 'PREMIUM' ||
+          gradeUpper === 'FLAGSHIP'
+        );
+
+      if (
+        isX50LvMarket ||
+        isS70LvGrade
+      ) {
+        displayLabel =
+          'LV ' + gradeUpper;
+      }
+
+      const chips = [];
+
+      if (
+        isX50LvMarket ||
+        isS70LvGrade
+      ) {
+        chips.push(
+          'LV = Applies to all LV specifications'
+        );
+      }
+
+      chips.push(
+        displayLabel +
+        ' = Current selection'
+      );
+
+      return {
+        baselineLabel:
+          baselineLabel,
+
+        currentSelection:
+          currentSelection ||
+          'Current vehicle selection',
+
+        displayLabel:
+          displayLabel,
+
+        symbolText:
+          formatDiagramLegendLabel_(
+            displayLabel
+          ),
+
+        chips:
+          chips
+      };
+    }
+
+
+    function formatDiagramLegendLabel_(
+      labelText
+    ) {
+      const label =
+        String(labelText || '').trim();
+
+      if (!label) {
+        return '';
+      }
+
+      if (
+        label.toUpperCase().indexOf('LV ') === 0
+      ) {
+        return (
+          'LV\n' +
+          label.substring(3)
+        );
+      }
+
+      return label;
+    }
+
+
+    function buildDiagramLegendItem(
+      symbolClass,
+      symbolText,
+      headingText,
+      descriptionText
+    ) {
+      const item =
+        document.createElement('div');
+
+      item.className =
+        'diagram-legend-item';
+
+      const symbolWrap =
+        document.createElement('div');
+
+      symbolWrap.className =
+        'diagram-legend-symbol';
+
+      const symbol =
+        document.createElement('div');
+
+      symbol.className =
+        symbolClass;
+
+      symbol.textContent =
+        symbolText || '';
+
+      const copy =
+        document.createElement('div');
+
+      copy.className =
+        'diagram-legend-copy';
+
+      const heading =
+        document.createElement('strong');
+
+      heading.textContent =
+        headingText;
+
+      const description =
+        document.createElement('span');
+
+      description.textContent =
+        descriptionText;
+
+      symbolWrap.appendChild(symbol);
+      copy.appendChild(heading);
+      copy.appendChild(description);
+      item.appendChild(symbolWrap);
+      item.appendChild(copy);
+
+      return item;
+    }
+
+
+    function renderAssemblyTagging(
+      section,
+      examples,
+      paperRequirement
+    ) {
+      const wrapper =
+        document.createElement('div');
+
+      wrapper.className =
+        'assembly-tagging';
+
+      const panel =
+        document.createElement('div');
+
+      panel.className =
+        'assembly-tagging-panel';
+
+      const heading =
+        document.createElement('div');
+
+      heading.className =
+        'assembly-tagging-heading';
+
+      heading.innerHTML =
+        '<h3>Tagging Examples</h3>' +
+        '<p>' +
+          'Use the required tag paper shown below, then follow these ' +
+          'Production Line and Supply Chain Management examples.' +
+        '</p>';
+
+      const paperPanel =
+        buildTagPrintingRequirement(
+          paperRequirement
+        );
+
+      const grid =
+        document.createElement('div');
+
+      grid.className =
+        'assembly-tagging-grid';
+
+      examples.forEach(function (
+        example
+      ) {
+        grid.appendChild(
+          buildAssemblyTaggingCard(
+            example
+          )
+        );
+      });
+
+      panel.appendChild(heading);
+
+      if (paperPanel) {
+        panel.appendChild(
+          paperPanel
+        );
+      }
+
+      panel.appendChild(grid);
+      wrapper.appendChild(panel);
+      section.appendChild(wrapper);
+    }
+
+
+
+    function buildTagPrintingRequirement(
+      requirement
+    ) {
+      if (!requirement) {
+        return null;
+      }
+
+      const panel =
+        document.createElement('div');
+
+      panel.className =
+        'tag-print-requirement';
+
+      if (requirement.swatchColour) {
+        panel.style.setProperty(
+          '--tag-paper-swatch',
+          requirement.swatchColour
+        );
+      }
+
+      const header =
+        document.createElement('div');
+
+      header.className =
+        'tag-print-requirement-header';
+
+      const title =
+        document.createElement('h4');
+
+      title.textContent =
+        'Tag Printing Requirement';
+
+      const status =
+        document.createElement('span');
+
+      status.className =
+        'tag-print-status';
+
+      status.textContent =
+        requirement.found
+          ? 'Required for Printing'
+          : 'Check Paper Reference';
+
+      header.appendChild(title);
+      header.appendChild(status);
+
+      const intro =
+        document.createElement('p');
+
+      intro.className =
+        'tag-print-intro';
+
+      intro.textContent =
+        'Before printing any Production Line or Supply Chain Management tag, use the paper specification below.';
+
+      const detailGrid =
+        document.createElement('div');
+
+      detailGrid.className =
+        'tag-paper-detail-grid';
+
+      detailGrid.appendChild(
+        buildTagPaperDetail(
+          'Selected Variant',
+          requirement.variantLabel ||
+          requirement.variant ||
+          SELECTED_VARIANT
+        )
+      );
+
+      detailGrid.appendChild(
+        buildTagPaperDetail(
+          'Required Tag Paper',
+          requirement.colourName ||
+          'Not specified',
+          true
+        )
+      );
+
+      detailGrid.appendChild(
+        buildTagPaperDetail(
+          'Paper Code',
+          requirement.colourCode ||
+          'Not found'
+        )
+      );
+
+      const paperDescription = [];
+
+      if (requirement.brand) {
+        paperDescription.push(
+          requirement.brand
+        );
+      }
+
+      if (requirement.gsm) {
+        paperDescription.push(
+          requirement.gsm + ' GSM'
+        );
+      }
+
+      detailGrid.appendChild(
+        buildTagPaperDetail(
+          'Paper Specification',
+          paperDescription.length > 0
+            ? paperDescription.join(' · ')
+            : 'Not found'
+        )
+      );
+
+      const instruction =
+        document.createElement('p');
+
+      instruction.className =
+        'tag-print-instruction';
+
+      if (!requirement.found) {
+        instruction.classList.add(
+          'tag-paper-missing'
+        );
+      }
+
+      const icon =
+        document.createElement('span');
+
+      icon.className =
+        'tag-print-instruction-icon';
+
+      icon.textContent =
+        requirement.found
+          ? '🖨'
+          : '⚠';
+
+      const text =
+        document.createElement('span');
+
+      text.textContent =
+        requirement.found
+          ? (
+              'Print all tagging labels below using ' +
+              requirement.colourName +
+              (
+                requirement.colourCode
+                  ? ' paper (' +
+                    requirement.colourCode +
+                    ').'
+                  : ' paper.'
+              ) +
+              ' Follow the tag content and format shown in the examples.'
+            )
+          : (
+              'The paper reference for ' +
+              (
+                requirement.colourName ||
+                'this variant'
+              ) +
+              ' was not found in PAPER_COLOUR_INFO. Please verify the paper before printing.'
+            );
+
+      instruction.appendChild(icon);
+      instruction.appendChild(text);
+
+      panel.appendChild(header);
+      panel.appendChild(intro);
+      panel.appendChild(detailGrid);
+      panel.appendChild(instruction);
+
+      return panel;
+    }
+
+
+    function buildTagPaperDetail(
+      labelText,
+      valueText,
+      showSwatch
+    ) {
+      const item =
+        document.createElement('div');
+
+      item.className =
+        'tag-paper-detail';
+
+      const label =
+        document.createElement('span');
+
+      label.className =
+        'tag-paper-detail-label';
+
+      label.textContent =
+        labelText;
+
+      const value =
+        document.createElement('span');
+
+      value.className =
+        'tag-paper-detail-value';
+
+      if (showSwatch) {
+        const swatch =
+          document.createElement('span');
+
+        swatch.className =
+          'tag-paper-swatch';
+
+        value.appendChild(swatch);
+      }
+
+      const text =
+        document.createElement('span');
+
+      text.textContent =
+        valueText || '—';
+
+      value.appendChild(text);
+
+      item.appendChild(label);
+      item.appendChild(value);
+
+      return item;
+    }
+
+
+    function buildAssemblyTaggingCard(
+      example
+    ) {
+      const card =
+        document.createElement('article');
+
+      card.className =
+        'assembly-tagging-card';
+
+      const title =
+        document.createElement('h4');
+
+      title.className =
+        'assembly-tagging-card-title';
+
+      title.textContent =
+        example.displayName ||
+        example.taggingType ||
+        'Tagging Example';
+
+      const imageBox =
+        document.createElement('div');
+
+      imageBox.className =
+        'assembly-tagging-image';
+
+      appendImageOrPlaceholder(
+        imageBox,
+        example.imageUrl,
+        example.displayName ||
+        example.taggingType ||
+        'Tagging example',
+        'assembly-tagging-picture'
+      );
+
+      const information =
+        document.createElement('div');
+
+      information.className =
+        'assembly-tagging-information';
+
+      const type =
+        document.createElement('span');
+
+      type.className =
+        'assembly-tagging-type';
+
+      type.textContent =
+        example.taggingType ||
+        'Tagging';
+
+      const description =
+        document.createElement('p');
+
+      description.className =
+        'assembly-tagging-description';
+
+      description.textContent =
+        example.description ||
+        'Identification tagging example.';
+
+      information.appendChild(type);
+      information.appendChild(description);
+
+      card.appendChild(title);
+      card.appendChild(imageBox);
+      card.appendChild(information);
+
+      return card;
+    }
+
+
+function appendImageOrPlaceholder(
+      container,
+      imageUrl,
+      altText,
+      className
+    ) {
+      if (!imageUrl) {
+        const placeholder =
+          document.createElement('div');
+
+        placeholder.className =
+          'no-image';
+
+        placeholder.textContent =
+          'No picture';
+
+        container.appendChild(
+          placeholder
+        );
+
+        return;
+      }
+
+      const image =
+        document.createElement('img');
+
+      image.className =
+        className;
+
+      image.src =
+        imageUrl;
+
+      image.alt =
+        altText || 'Part picture';
+
+      image.loading =
+        'lazy';
+
+      image.title =
+        'Click to enlarge';
+
+      image.onclick = function () {
+        openImageModal(
+          imageUrl,
+          altText
+        );
+      };
+
+      image.onerror = function () {
+        const placeholder =
+          document.createElement('div');
+
+        placeholder.className =
+          'no-image';
+
+        placeholder.textContent =
+          'Picture unavailable';
+
+        image.replaceWith(
+          placeholder
+        );
+      };
+
+      container.appendChild(image);
+    }
+
+
+    function appendSummaryChip(
+      parent,
+      text
+    ) {
+      const chip =
+        document.createElement('span');
+
+      chip.className =
+        'summary-chip';
+
+      chip.textContent =
+        text;
+
+      parent.appendChild(chip);
+    }
+
+
+    let modalZoom = 1;
+    let modalPanX = 0;
+    let modalPanY = 0;
+    let modalDragging = false;
+    let modalDragStartX = 0;
+    let modalDragStartY = 0;
+    let modalPanStartX = 0;
+    let modalPanStartY = 0;
+
+
+    function applyModalTransform() {
+      const modalImage =
+        document.getElementById(
+          'modalImage'
+        );
+
+      const panLayer =
+        document.getElementById(
+          'modalPanLayer'
+        );
+
+      const zoomLevel =
+        document.getElementById(
+          'modalZoomLevel'
+        );
+
+      if (
+        !modalImage ||
+        !panLayer ||
+        !zoomLevel
+      ) {
+        return;
+      }
+
+      modalImage.style.transform =
+        'scale(' + modalZoom + ')';
+
+      panLayer.style.transform =
+        'translate3d(' +
+        modalPanX + 'px, ' +
+        modalPanY + 'px, 0)';
+
+      zoomLevel.textContent =
+        Math.round(
+          modalZoom * 100
+        ) + '%';
+    }
+
+
+    function zoomModalImage(change) {
+      const nextZoom =
+        Math.min(
+          5,
+          Math.max(
+            0.5,
+            modalZoom + change
+          )
+        );
+
+      modalZoom = nextZoom;
+
+      if (modalZoom <= 1) {
+        modalPanX = 0;
+        modalPanY = 0;
+      }
+
+      applyModalTransform();
+    }
+
+
+    function resetModalZoom() {
+      modalZoom = 1;
+      modalPanX = 0;
+      modalPanY = 0;
+      applyModalTransform();
+    }
+
+
+    function setupModalZoomControls() {
+      const viewport =
+        document.getElementById(
+          'modalViewport'
+        );
+
+      if (!viewport) {
+        return;
+      }
+
+      viewport.addEventListener(
+        'wheel',
+        function (event) {
+          event.preventDefault();
+
+          zoomModalImage(
+            event.deltaY < 0
+              ? 0.25
+              : -0.25
+          );
+        },
+        { passive: false }
+      );
+
+      viewport.addEventListener(
+        'pointerdown',
+        function (event) {
+          if (modalZoom <= 1) {
+            return;
+          }
+
+          modalDragging = true;
+
+          modalDragStartX =
+            event.clientX;
+
+          modalDragStartY =
+            event.clientY;
+
+          modalPanStartX =
+            modalPanX;
+
+          modalPanStartY =
+            modalPanY;
+
+          viewport.classList.add(
+            'dragging'
+          );
+
+          viewport.setPointerCapture(
+            event.pointerId
+          );
+        }
+      );
+
+      viewport.addEventListener(
+        'pointermove',
+        function (event) {
+          if (!modalDragging) {
+            return;
+          }
+
+          modalPanX =
+            modalPanStartX +
+            (
+              event.clientX -
+              modalDragStartX
+            );
+
+          modalPanY =
+            modalPanStartY +
+            (
+              event.clientY -
+              modalDragStartY
+            );
+
+          applyModalTransform();
+        }
+      );
+
+      function stopDragging(event) {
+        if (!modalDragging) {
+          return;
+        }
+
+        modalDragging = false;
+
+        viewport.classList.remove(
+          'dragging'
+        );
+
+        if (
+          event &&
+          event.pointerId !== undefined &&
+          viewport.hasPointerCapture(
+            event.pointerId
+          )
+        ) {
+          viewport.releasePointerCapture(
+            event.pointerId
+          );
+        }
+      }
+
+      viewport.addEventListener(
+        'pointerup',
+        stopDragging
+      );
+
+      viewport.addEventListener(
+        'pointercancel',
+        stopDragging
+      );
+
+      viewport.addEventListener(
+        'dblclick',
+        function () {
+          if (modalZoom === 1) {
+            modalZoom = 2;
+            applyModalTransform();
+          } else {
+            resetModalZoom();
+          }
+        }
+      );
+    }
+
+
+    function openImageModal(
+      imageUrl,
+      altText
+    ) {
+      const modal =
+        document.getElementById(
+          'imageModal'
+        );
+
+      const modalImage =
+        document.getElementById(
+          'modalImage'
+        );
+
+      modalImage.src =
+        imageUrl;
+
+      modalImage.alt =
+        altText || 'Enlarged picture';
+
+      resetModalZoom();
+
+      modal.classList.add(
+        'open'
+      );
+
+      document.body.style.overflow =
+        'hidden';
+    }
+
+
+    function closeImageModal(event) {
+      if (
+        event &&
+        event.target &&
+        event.target.id === 'modalImage'
+      ) {
+        return;
+      }
+
+      const modal =
+        document.getElementById(
+          'imageModal'
+        );
+
+      modal.classList.remove(
+        'open'
+      );
+
+      document.getElementById(
+        'modalImage'
+      ).src = '';
+
+      resetModalZoom();
+
+      document.body.style.overflow =
+        '';
+    }
+
+
+    document.addEventListener(
+      'keydown',
+      function (event) {
+        const modal =
+          document.getElementById(
+            'imageModal'
+          );
+
+        const modalIsOpen =
+          modal &&
+          modal.classList.contains(
+            'open'
+          );
+
+        if (event.key === 'Escape') {
+          closeImageModal();
+          return;
+        }
+
+        if (!modalIsOpen) {
+          return;
+        }
+
+        if (
+          event.key === '+' ||
+          event.key === '='
+        ) {
+          event.preventDefault();
+          zoomModalImage(0.25);
+        }
+
+        if (event.key === '-') {
+          event.preventDefault();
+          zoomModalImage(-0.25);
+        }
+
+        if (
+          event.key === '0' ||
+          event.key.toLowerCase() === 'r'
+        ) {
+          event.preventDefault();
+          resetModalZoom();
+        }
+      }
+    );
+
+
+    function showError(messageText) {
+      const results =
+        document.getElementById(
+          'results'
+        );
+
+      results.innerHTML = '';
+
+      const message =
+        document.createElement('div');
+
+      message.className =
+        'error-message';
+
+      message.textContent =
+        messageText;
+
+      results.appendChild(
+        message
+      );
+    }
+
+
+    function returnHome() {
+      const modulePageUrl =
+        WEB_APP_URL +
+        '?page=modules' +
+        '&model=' +
+        encodeURIComponent(
+          SELECTED_MODEL
+        ) +
+        '&variant=' +
+        encodeURIComponent(
+          SELECTED_VARIANT
+        ) +
+        '&grade=' +
+        encodeURIComponent(
+          SELECTED_GRADE
+        );
+
+      window.top.location.href =
+        modulePageUrl;
+    }
+  </script>
+
+
+  <button
+    id="globalBackToTopButton"
+    class="global-back-to-top-button"
+    type="button"
+    aria-label="Go to top of page"
+    title="Go to top"
+  >
+    <span class="global-back-to-top-arrow">↑</span>
+    <span class="global-back-to-top-text">Go to Top</span>
+  </button>
+
+  <script>
+    (function () {
+      const button =
+        document.getElementById(
+          'globalBackToTopButton'
+        );
+
+      if (!button) {
+        return;
+      }
+
+      function updateBackToTopButton() {
+        const pageCanScroll =
+          document.documentElement.scrollHeight >
+          window.innerHeight + 80;
+
+        const hasScrolledDown =
+          window.scrollY > 320;
+
+        button.classList.toggle(
+          'show',
+          pageCanScroll && hasScrolledDown
+        );
+      }
+
+      button.addEventListener(
+        'click',
+        function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      );
+
+      window.addEventListener(
+        'scroll',
+        updateBackToTopButton,
+        { passive: true }
+      );
+
+      window.addEventListener(
+        'resize',
+        updateBackToTopButton
+      );
+
+      document.addEventListener(
+        'DOMContentLoaded',
+        updateBackToTopButton
+      );
+
+      updateBackToTopButton();
+    })();
+  </script>
+
+</body>
+</html>

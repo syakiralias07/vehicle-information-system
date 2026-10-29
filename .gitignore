@@ -1,0 +1,21 @@
+
+# Environment and secret files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local configuration (review before sharing)
+config.php
+
+# Local data and backups
+*.log
+*.bak
+*.sql.gz
+
+# Database exports
+*.sql
+
+# Local data
+data/

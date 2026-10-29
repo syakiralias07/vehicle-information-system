@@ -1,0 +1,1519 @@
+<?php require_once __DIR__.'/plant-page.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+  <base target="_top">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 22px 16px 50px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #172033;
+      background: #f2f6fb;
+    }
+
+    .page-container {
+      width: 100%;
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      min-height: 46px;
+      margin-bottom: 24px;
+      padding: 0 20px;
+      border: 1px solid #194776;
+      border-radius: 10px;
+      color: #194776;
+      background: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      color: white;
+      background: #194776;
+    }
+
+    .page-heading {
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: 18px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          #153f72,
+          #28679e
+        );
+      box-shadow:
+        0 12px 35px
+        rgba(24, 66, 108, 0.18);
+    }
+
+    .page-heading h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    .selection-path {
+      margin: 0;
+      color: #dcecff;
+      font-size: 18px;
+    }
+
+    .grade-section {
+      padding: 28px;
+      border: 1px solid #dce5ef;
+      border-radius: 18px;
+      background: white;
+      box-shadow:
+        0 10px 30px
+        rgba(31, 68, 112, 0.10);
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+      color: #194776;
+      text-align: center;
+      font-size: 27px;
+    }
+
+    .section-description {
+      margin: 0 0 25px;
+      color: #68788d;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .grade-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .grade-card {
+      overflow: hidden;
+      padding: 0;
+      border: 2px solid #d8e3ef;
+      border-radius: 16px;
+      color: #183f6f;
+      background: #f8fbff;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .grade-card:hover {
+      border-color: #245d97;
+      background: #edf5fd;
+      transform: translateY(-4px);
+      box-shadow:
+        0 12px 24px
+        rgba(31, 68, 112, 0.16);
+    }
+
+    .grade-picture {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 230px;
+      padding: 14px;
+      background: #eef3f8;
+    }
+
+    .grade-picture img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 9px;
+      background: white;
+    }
+
+    .grade-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      border: 1px dashed #b7c8da;
+      border-radius: 9px;
+      color: #718399;
+      background: white;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .grade-information {
+      padding: 21px;
+    }
+
+    .grade-name {
+      display: block;
+      margin-bottom: 9px;
+      color: #194776;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .grade-description {
+      display: block;
+      min-height: 58px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #dbe5ef;
+      color: #52677f;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .comparison-section {
+      margin-top: 28px;
+      padding: 28px;
+      border: 1px solid #dce5ef;
+      border-radius: 18px;
+      background: white;
+      box-shadow:
+        0 10px 30px
+        rgba(31, 68, 112, 0.10);
+    }
+
+    .comparison-wrapper {
+      overflow-x: auto;
+      margin-top: 22px;
+      border: 1px solid #dce5ef;
+      border-radius: 14px;
+    }
+
+    .comparison-mobile-hint {
+      display: none;
+    }
+
+    .comparison-table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    .comparison-table th {
+      padding: 16px;
+      border-bottom: 1px solid #dce5ef;
+      color: white;
+      background: #194776;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .comparison-table th:first-child {
+      width: 210px;
+      text-align: left;
+    }
+
+    .comparison-table td {
+      padding: 16px;
+      border-top: 1px solid #d7e3ee;
+      border-right: 1px solid #d7e3ee;
+      vertical-align: top;
+      text-align: center;
+    }
+
+    /* Strong horizontal divider between different comparison items. */
+    .comparison-table tbody tr + tr td {
+      border-top: 8px solid #d4e5f2;
+    }
+
+    .comparison-table td:last-child,
+    .comparison-table th:last-child {
+      border-right: none;
+    }
+
+    .comparison-part-name {
+      color: #194776;
+      background: #edf5fb;
+      border-right: 4px solid #194776 !important;
+      text-align: left !important;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .comparison-data-cell {
+      position: relative;
+      background: #ffffff;
+    }
+
+    /* Strong vertical divider between separate grade groups. */
+    .comparison-group-divider {
+      border-left: 5px solid #2b6f9e !important;
+    }
+
+    .comparison-cell-merged {
+      background: #f1fbf7;
+      box-shadow: inset 0 0 0 2px #9fd7c0;
+    }
+
+    .comparison-cell-single {
+      background: #ffffff;
+    }
+
+    .comparison-usage-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.45px;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .comparison-usage-badge.same-part {
+      color: #116149;
+      background: #dff5eb;
+      border: 1px solid #90cfb5;
+    }
+
+    .comparison-usage-badge.single-grade {
+      color: #194776;
+      background: #e6f1fa;
+      border: 1px solid #b7d2e6;
+    }
+
+    .comparison-image-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 170px;
+      margin-bottom: 12px;
+      padding: 8px;
+      border: 1px solid #dce5ef;
+      border-radius: 10px;
+      background: #f7f9fc;
+    }
+
+    .comparison-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 7px;
+      background: white;
+      cursor: zoom-in;
+    }
+
+    .comparison-placeholder {
+      color: #8090a3;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .comparison-item-name {
+      display: block;
+      min-height: 42px;
+      margin-bottom: 9px;
+      color: #194776;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .comparison-number-label {
+      display: block;
+      margin-bottom: 4px;
+      color: #708096;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .comparison-part-number {
+      display: block;
+      color: #183f6f;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .loading-message,
+    .error-message,
+    .empty-message {
+      padding: 35px;
+      border-radius: 14px;
+      text-align: center;
+      background: white;
+    }
+
+    .error-message {
+      color: #b42318;
+      background: #fff1f1;
+      border: 1px solid #ffc7c7;
+    }
+
+    .empty-message {
+      color: #805b10;
+      background: #fff9e9;
+      border: 1px solid #eed895;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      vertical-align: middle;
+      border: 4px solid #d6e4f2;
+      border-top-color: #194776;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .grade-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grade-card {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+      }
+
+      .grade-picture {
+        height: 190px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 12px 8px 32px;
+      }
+
+      .page-container {
+        max-width: 100%;
+      }
+
+      .back-button {
+        min-height: 42px;
+        margin-bottom: 14px;
+        padding: 0 14px;
+        border-radius: 9px;
+        font-size: 13px;
+      }
+
+      .page-heading,
+      .grade-section {
+        padding: 16px;
+        border-radius: 14px;
+      }
+
+      .page-heading {
+        margin-bottom: 16px;
+      }
+
+      .page-heading h1 {
+        margin-bottom: 6px;
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      .selection-path {
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .section-title {
+        font-size: 21px;
+        line-height: 1.3;
+      }
+
+      .section-description {
+        margin-bottom: 16px;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .grade-grid {
+        gap: 12px;
+      }
+
+      .grade-card {
+        display: block;
+        border-radius: 13px;
+      }
+
+      .grade-picture {
+        height: 180px;
+        padding: 9px;
+      }
+
+      .grade-information {
+        padding: 14px;
+      }
+
+      .grade-name {
+        margin-bottom: 6px;
+        font-size: 18px;
+      }
+
+      .grade-description {
+        min-height: 0;
+        margin-top: 7px;
+        padding-top: 7px;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      /*
+       * Phone-friendly comparison view:
+       * convert the wide desktop table into stacked cards.
+       */
+      .comparison-section {
+        margin-top: 16px;
+        padding: 14px 10px;
+        border-radius: 14px;
+      }
+
+      .comparison-section .section-title {
+        padding: 0 5px;
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .comparison-section .section-description {
+        padding: 0 5px;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .comparison-mobile-hint {
+        display: block;
+        margin: 8px 5px 0;
+        padding: 9px 11px;
+        border-radius: 9px;
+        color: #52677f;
+        background: #edf5fb;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .comparison-wrapper {
+        overflow: visible;
+        margin-top: 10px;
+        border: none;
+        border-radius: 0;
+      }
+
+      .comparison-table,
+      .comparison-table tbody,
+      .comparison-table tr,
+      .comparison-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .comparison-table {
+        min-width: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: transparent;
+      }
+
+      .comparison-table thead {
+        display: none;
+      }
+
+      .comparison-table tbody tr {
+        overflow: hidden;
+        margin-bottom: 16px;
+        border: 1px solid #d7e3ee;
+        border-radius: 13px;
+        background: #ffffff;
+        box-shadow:
+          0 5px 14px
+          rgba(31, 68, 112, 0.08);
+      }
+
+      .comparison-table tbody tr:last-child {
+        margin-bottom: 0;
+      }
+
+      .comparison-table td {
+        padding: 12px;
+        border-top: 1px solid #e3ebf3;
+        border-right: none;
+      }
+
+      .comparison-table tbody tr + tr td {
+        border-top: 1px solid #e3ebf3;
+      }
+
+      .comparison-part-name {
+        padding: 13px 14px !important;
+        border-top: none !important;
+        border-right: none !important;
+        border-bottom: 3px solid #194776 !important;
+        color: #ffffff;
+        background: #194776;
+        text-align: left !important;
+        font-size: 15px;
+        line-height: 1.35;
+      }
+
+      .comparison-data-cell {
+        padding: 12px !important;
+      }
+
+      .comparison-group-divider {
+        border-left: none !important;
+        border-top: 5px solid #d4e5f2 !important;
+      }
+
+      .comparison-cell-merged {
+        background: #f1fbf7;
+        box-shadow: none;
+      }
+
+      .comparison-cell-single {
+        background: #ffffff;
+      }
+
+      .comparison-usage-badge {
+        display: flex;
+        width: fit-content;
+        max-width: 100%;
+        min-height: 26px;
+        margin: 0 auto 9px;
+        padding: 5px 9px;
+        font-size: 9px;
+        line-height: 1.3;
+        white-space: normal;
+        text-align: center;
+      }
+
+      .comparison-image-box {
+        height: 150px;
+        margin-bottom: 9px;
+        padding: 6px;
+      }
+
+      .comparison-item-name {
+        min-height: 0;
+        margin-bottom: 7px;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .comparison-number-label {
+        margin-bottom: 3px;
+        font-size: 9px;
+      }
+
+      .comparison-part-number {
+        font-size: 14px;
+      }
+    }
+  
+    /* Floating Go to Top button */
+    .global-back-to-top-button {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 112px;
+      min-height: 48px;
+      padding: 0 17px;
+      border: 2px solid #ffffff;
+      border-radius: 999px;
+      color: #ffffff;
+      background: #194776;
+      box-shadow:
+        0 10px 28px
+        rgba(25, 71, 118, 0.30);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px);
+      transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .global-back-to-top-button.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .global-back-to-top-button:hover,
+    .global-back-to-top-button:focus-visible {
+      outline: none;
+      background: #28679e;
+    }
+
+    .global-back-to-top-arrow {
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    @media (max-width: 700px) {
+      .global-back-to-top-button {
+        right: 14px;
+        bottom: 14px;
+        min-width: 52px;
+        min-height: 52px;
+        padding: 0;
+      }
+
+      .global-back-to-top-text {
+        display: none;
+      }
+    }
+
+  </style>
+
+  <?php require __DIR__ . '/theme.php'; ?>
+<link rel="stylesheet" href="model-selection.css?v=<?=filemtime(__DIR__.'/model-selection.css')?>">
+<link rel="stylesheet" href="catalogue-details.css?v=<?=filemtime(__DIR__.'/catalogue-details.css')?>">
+<script src="api-client.js?v=<?=filemtime(__DIR__.'/api-client.js')?>" defer></script>
+</head>
+
+<body class="catalogue-detail detail-grades">
+
+  <div class="page-container">
+
+    <button
+      class="back-button"
+      type="button"
+      onclick="returnVariants()"
+    >
+      ← Back to Variant Selection
+    </button>
+
+    <header class="page-heading"><p class="detail-eyebrow"><span>03</span> Grade / market selection <i aria-hidden="true"></i> <?=htmlspecialchars(visPlants()[visPlant()],ENT_QUOTES)?></p>
+      <h1 id="pageTitle">Select Grade</h1>
+
+      <p
+        id="selectionPath"
+        class="selection-path"
+      ></p>
+    </header>
+
+    <main id="content">
+      <div class="loading-message">
+        <span class="spinner"></span>
+        Loading grades...
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    const WEB_APP_URL =
+      <?php echo json_encode(rtrim(str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME'])),'/').'/index.php', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+
+    const SELECTED_MODEL =
+      <?php echo json_encode(($_GET['model'] ?? ''), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+
+    const SELECTED_VARIANT =
+      <?php echo json_encode(($_GET['variant'] ?? ''), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      loadGradePage
+    );
+
+
+    function loadGradePage() {
+      document.getElementById(
+        'selectionPath'
+      ).textContent =
+        SELECTED_MODEL +
+        ' → ' +
+        SELECTED_VARIANT +
+        ' → Choose selection';
+
+      if (
+        !SELECTED_MODEL ||
+        !SELECTED_VARIANT
+      ) {
+        showError(
+          'Model or variant is missing.'
+        );
+
+        return;
+      }
+
+      google.script.run
+        .withSuccessHandler(displayGrades)
+        .withFailureHandler(function (error) {
+          showError(
+            error && error.message
+              ? error.message
+              : 'Unable to load the grades.'
+          );
+        })
+        .getGradePage(
+          SELECTED_MODEL,
+          SELECTED_VARIANT
+        );
+    }
+
+
+    function displayGrades(response) {
+      const content =
+        document.getElementById('content');
+
+      content.innerHTML = '';
+
+      if (!response || !response.found) {
+        showError(
+          response && response.message
+            ? response.message
+            : 'No grades were found.'
+        );
+
+        return;
+      }
+
+      if (
+        response.grades.length === 1
+      ) {
+        openModulePage(
+          response.grades[0].code
+        );
+
+        return;
+      }
+
+      const section =
+        document.createElement('section');
+
+      section.className =
+        'grade-section';
+
+      const selectionLabel =
+        response.selectionLabel ||
+        'Grade';
+
+      document.getElementById(
+        'pageTitle'
+      ).textContent =
+        'Select ' +
+        selectionLabel;
+
+      document.getElementById(
+        'selectionPath'
+      ).textContent =
+        SELECTED_MODEL +
+        ' → ' +
+        SELECTED_VARIANT +
+        ' → Choose ' +
+        selectionLabel.toLowerCase();
+
+      section.innerHTML =
+        '<h2 class="section-title">' +
+          escapeHtml(
+            response.selectionHeading ||
+            ('Choose ' + selectionLabel)
+          ) +
+        '</h2>' +
+        '<p class="section-description">' +
+          escapeHtml(
+            response.selectionDescription ||
+            'Select an option to continue.'
+          ) +
+        '</p>';
+
+      const grid =
+        document.createElement('div');
+
+      grid.className =
+        'grade-grid';
+
+      response.grades.forEach(function (
+        grade
+      ) {
+        grid.appendChild(
+          buildGradeCard(grade)
+        );
+      });
+
+      section.appendChild(grid);
+      content.appendChild(section);
+
+      renderGradeComparison(
+        response.comparisons,
+        response.comparisonColumns,
+        response.comparisonTitle,
+        response.comparisonDescription,
+        content
+      );
+    }
+
+
+    function renderGradeComparison(
+      comparisons,
+      comparisonColumns,
+      titleText,
+      descriptionText,
+      parent
+    ) {
+      if (
+        !comparisons ||
+        comparisons.length === 0 ||
+        !comparisonColumns ||
+        comparisonColumns.length === 0
+      ) {
+        return;
+      }
+
+      const section =
+        document.createElement('section');
+
+      section.className =
+        'comparison-section';
+
+      section.innerHTML =
+        '<h2 class="section-title">' +
+          escapeHtml(
+            titleText ||
+            'What Is Different?'
+          ) +
+        '</h2>' +
+        '<p class="section-description">' +
+          escapeHtml(
+            descriptionText ||
+            'The different parts are displayed side by side.'
+          ) +
+        '</p>';
+
+      const wrapper =
+        document.createElement('div');
+
+      wrapper.className =
+        'comparison-wrapper';
+
+      const mobileHint =
+        document.createElement('div');
+
+      mobileHint.className =
+        'comparison-mobile-hint';
+
+      mobileHint.textContent =
+        'Scroll down to compare each part by grade / market.';
+
+      section.appendChild(
+        mobileHint
+      );
+
+      const table =
+        document.createElement('table');
+
+      table.className =
+        'comparison-table';
+
+      const thead =
+        document.createElement('thead');
+
+      const headerRow =
+        document.createElement('tr');
+
+      const partHeader =
+        document.createElement('th');
+
+      partHeader.textContent =
+        'Comparison Item';
+
+      headerRow.appendChild(
+        partHeader
+      );
+
+      comparisonColumns.forEach(function (
+        comparisonColumn
+      ) {
+        const header =
+          document.createElement('th');
+
+        header.textContent =
+          SELECTED_MODEL +
+          ' ' +
+          SELECTED_VARIANT +
+          ' ' +
+          (
+            comparisonColumn.label ||
+            comparisonColumn.code
+          );
+
+        headerRow.appendChild(
+          header
+        );
+      });
+
+      thead.appendChild(
+        headerRow
+      );
+
+      const tbody =
+        document.createElement('tbody');
+
+      comparisons.forEach(function (
+        comparison
+      ) {
+        const row =
+          document.createElement('tr');
+
+        const partCell =
+          document.createElement('td');
+
+        partCell.className =
+          'comparison-part-name';
+
+        partCell.textContent =
+          comparison.partName ||
+          'Different Part';
+
+        row.appendChild(partCell);
+
+        let columnIndex = 0;
+
+        while (
+          columnIndex < comparisonColumns.length
+        ) {
+          const item =
+            comparison.items &&
+            comparison.items[columnIndex]
+              ? comparison.items[columnIndex]
+              : {};
+
+          let columnSpan = 1;
+
+          while (
+            columnIndex + columnSpan <
+              comparisonColumns.length &&
+            canMergeComparisonItems(
+              item,
+              comparison.items &&
+              comparison.items[
+                columnIndex + columnSpan
+              ]
+                ? comparison.items[
+                    columnIndex + columnSpan
+                  ]
+                : {}
+            )
+          ) {
+            columnSpan++;
+          }
+
+          const combinedColumnLabel =
+            comparisonColumns
+              .slice(
+                columnIndex,
+                columnIndex + columnSpan
+              )
+              .map(function (column) {
+                return (
+                  column.label ||
+                  column.code
+                );
+              })
+              .join(' + ');
+
+          const comparisonCell =
+            buildComparisonCell(
+              item,
+              (
+                item.partName ||
+                comparison.partName ||
+                'Different Part'
+              ) +
+              ' — ' +
+              combinedColumnLabel,
+              {
+                merged: columnSpan > 1,
+                labels: comparisonColumns
+                  .slice(
+                    columnIndex,
+                    columnIndex + columnSpan
+                  )
+                  .map(function (column) {
+                    return (
+                      column.label ||
+                      column.code
+                    );
+                  })
+              }
+            );
+
+          comparisonCell.classList.add(
+            'comparison-data-cell'
+          );
+
+          comparisonCell.classList.add(
+            columnSpan > 1
+              ? 'comparison-cell-merged'
+              : 'comparison-cell-single'
+          );
+
+          if (columnIndex > 0) {
+            comparisonCell.classList.add(
+              'comparison-group-divider'
+            );
+          }
+
+          if (columnSpan > 1) {
+            comparisonCell.colSpan =
+              columnSpan;
+
+            comparisonCell.setAttribute(
+              'aria-label',
+              combinedColumnLabel +
+              ' use the same part'
+            );
+
+            comparisonCell.title =
+              combinedColumnLabel +
+              ' use the same part';
+          }
+
+          row.appendChild(
+            comparisonCell
+          );
+
+          columnIndex += columnSpan;
+        }
+
+        tbody.appendChild(row);
+      });
+
+      table.appendChild(thead);
+      table.appendChild(tbody);
+      wrapper.appendChild(table);
+      section.appendChild(wrapper);
+      parent.appendChild(section);
+    }
+
+
+    function canMergeComparisonItems(
+      firstItem,
+      secondItem
+    ) {
+      if (!firstItem || !secondItem) {
+        return false;
+      }
+
+      const firstPartNumber =
+        normaliseComparisonValue(
+          firstItem.partNumber
+        );
+
+      const secondPartNumber =
+        normaliseComparisonValue(
+          secondItem.partNumber
+        );
+
+      /*
+       * Items are already within the same comparison row.
+       * Therefore, matching non-empty part numbers mean
+       * the neighbouring grades use the same part.
+       */
+      return (
+        firstPartNumber !== '' &&
+        firstPartNumber ===
+          secondPartNumber
+      );
+    }
+
+
+    function normaliseComparisonValue(
+      value
+    ) {
+      return String(value || '')
+        .trim()
+        .toUpperCase();
+    }
+
+
+    function buildComparisonCell(
+      item,
+      altText,
+      groupInformation
+    ) {
+      const cell =
+        document.createElement('td');
+
+      const labels =
+        groupInformation &&
+        Array.isArray(
+          groupInformation.labels
+        )
+          ? groupInformation.labels
+          : [];
+
+      const usageBadge =
+        document.createElement('div');
+
+      usageBadge.className =
+        'comparison-usage-badge ' +
+        (
+          groupInformation &&
+          groupInformation.merged
+            ? 'same-part'
+            : 'single-grade'
+        );
+
+      usageBadge.textContent =
+        groupInformation &&
+        groupInformation.merged
+          ? 'Same part used by ' +
+            labels.join(' + ')
+          : (
+              labels.length > 0
+                ? labels[0] + ' only'
+                : 'Single grade'
+            );
+
+      const imageBox =
+        document.createElement('div');
+
+      imageBox.className =
+        'comparison-image-box';
+
+      if (item && item.imageUrl) {
+        const image =
+          document.createElement('img');
+
+        image.className =
+          'comparison-image';
+
+        image.src =
+          item.imageUrl;
+
+        image.alt =
+          altText ||
+          'Grade comparison picture';
+
+        image.title =
+          'Click to open the full picture';
+
+        image.onclick = function () {
+          window.open(
+            item.originalLink ||
+            item.imageUrl,
+            '_blank'
+          );
+        };
+
+        image.onerror = function () {
+          imageBox.innerHTML =
+            '<div class="comparison-placeholder">' +
+              'Picture unavailable.<br>' +
+              'Check the Drive link and permission.' +
+            '</div>';
+        };
+
+        imageBox.appendChild(image);
+      } else {
+        imageBox.innerHTML =
+          '<div class="comparison-placeholder">' +
+            'Add picture link in GRADE_COMPARISON.' +
+          '</div>';
+      }
+
+      const itemName =
+        document.createElement('span');
+
+      itemName.className =
+        'comparison-item-name';
+
+      itemName.textContent =
+        item && item.partName
+          ? item.partName
+          : '—';
+
+      const label =
+        document.createElement('span');
+
+      label.className =
+        'comparison-number-label';
+
+      label.textContent =
+        'Part Number';
+
+      const number =
+        document.createElement('span');
+
+      number.className =
+        'comparison-part-number';
+
+      number.textContent =
+        item && item.partNumber
+          ? item.partNumber
+          : '—';
+
+      cell.appendChild(usageBadge);
+      cell.appendChild(imageBox);
+      cell.appendChild(itemName);
+      cell.appendChild(label);
+      cell.appendChild(number);
+
+      return cell;
+    }
+
+
+    function buildGradeCard(grade) {
+      const card =
+        document.createElement('button');
+
+      card.className =
+        'grade-card';
+
+      card.type = 'button';
+
+      card.onclick = function () {
+        openModulePage(
+          grade.code
+        );
+      };
+
+      const picture =
+        document.createElement('div');
+
+      picture.className =
+        'grade-picture';
+
+      if (grade.imageUrl) {
+        const image =
+          document.createElement('img');
+
+        image.src =
+          grade.imageUrl;
+
+        image.alt =
+          grade.displayName ||
+          grade.code;
+
+        image.onerror = function () {
+          picture.innerHTML =
+            '<div class="grade-placeholder">' +
+              'Picture unavailable.<br>' +
+              'Check the Drive link and permission.' +
+            '</div>';
+        };
+
+        picture.appendChild(image);
+      } else {
+        picture.innerHTML =
+          '<div class="grade-placeholder">' +
+            'Add the grade picture link in GRADE_SELECTION.' +
+          '</div>';
+      }
+
+      const information =
+        document.createElement('div');
+
+      information.className =
+        'grade-information';
+
+      const name =
+        document.createElement('span');
+
+      name.className =
+        'grade-name';
+
+      name.textContent =
+        grade.displayName ||
+        grade.code;
+
+      const description =
+        document.createElement('span');
+
+      description.className =
+        'grade-description';
+
+      description.textContent =
+        grade.description ||
+        'Select this grade to continue.';
+
+      information.appendChild(name);
+      information.appendChild(description);
+      card.appendChild(picture);
+      card.appendChild(information);
+
+      return card;
+    }
+
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+
+    function openModulePage(gradeCode) {
+      const modulePageUrl =
+        WEB_APP_URL +
+        '?page=modules' +
+        '&model=' +
+        encodeURIComponent(
+          SELECTED_MODEL
+        ) +
+        '&variant=' +
+        encodeURIComponent(
+          SELECTED_VARIANT
+        ) +
+        '&grade=' +
+        encodeURIComponent(
+          gradeCode
+        );
+
+      window.top.location.href =
+        window.visPlantUrl(modulePageUrl);
+    }
+
+
+    function showError(messageText) {
+      const content =
+        document.getElementById('content');
+
+      content.innerHTML = '';
+
+      const message =
+        document.createElement('div');
+
+      message.className =
+        'error-message';
+
+      message.textContent =
+        messageText;
+
+      content.appendChild(message);
+    }
+
+
+    function returnVariants() {
+      const variantPageUrl =
+        WEB_APP_URL +
+        '?page=variants' +
+        '&model=' +
+        encodeURIComponent(
+          SELECTED_MODEL
+        );
+
+      window.top.location.href =
+        window.visPlantUrl(variantPageUrl);
+    }
+  </script>
+
+
+  <button
+    id="globalBackToTopButton"
+    class="global-back-to-top-button"
+    type="button"
+    aria-label="Go to top of page"
+    title="Go to top"
+  >
+    <span class="global-back-to-top-arrow">↑</span>
+    <span class="global-back-to-top-text">Go to Top</span>
+  </button>
+
+  <script>
+    (function () {
+      const button =
+        document.getElementById(
+          'globalBackToTopButton'
+        );
+
+      if (!button) {
+        return;
+      }
+
+      function updateBackToTopButton() {
+        const pageCanScroll =
+          document.documentElement.scrollHeight >
+          window.innerHeight + 80;
+
+        const hasScrolledDown =
+          window.scrollY > 320;
+
+        button.classList.toggle(
+          'show',
+          pageCanScroll && hasScrolledDown
+        );
+      }
+
+      button.addEventListener(
+        'click',
+        function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      );
+
+      window.addEventListener(
+        'scroll',
+        updateBackToTopButton,
+        { passive: true }
+      );
+
+      window.addEventListener(
+        'resize',
+        updateBackToTopButton
+      );
+
+      document.addEventListener(
+        'DOMContentLoaded',
+        updateBackToTopButton
+      );
+
+      updateBackToTopButton();
+    })();
+  </script>
+
+<script src="vis-last-updated.js?v=<?=filemtime(__DIR__.'/vis-last-updated.js')?>" defer></script>
+</body>
+</html>

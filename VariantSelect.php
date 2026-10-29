@@ -1,0 +1,1296 @@
+<?php require_once __DIR__.'/plant-page.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8">
+  <base target="_top">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 22px 16px 50px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #172033;
+      background: #f2f6fb;
+    }
+
+    .page-container {
+      width: 100%;
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      min-height: 46px;
+      margin-bottom: 24px;
+      padding: 0 20px;
+      border: 1px solid #194776;
+      border-radius: 10px;
+      color: #194776;
+      background: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      color: white;
+      background: #194776;
+    }
+
+    .page-heading {
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: 18px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          #153f72,
+          #28679e
+        );
+      box-shadow:
+        0 12px 35px
+        rgba(24, 66, 108, 0.18);
+    }
+
+    .page-heading h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    .selection-path {
+      margin: 0;
+      color: #dcecff;
+      font-size: 18px;
+    }
+
+    .selection-section,
+    .comparison-section {
+      margin-bottom: 28px;
+      padding: 26px;
+      border: 1px solid #dce5ef;
+      border-radius: 18px;
+      background: white;
+      box-shadow:
+        0 10px 30px
+        rgba(31, 68, 112, 0.10);
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+      color: #194776;
+      font-size: 27px;
+    }
+
+    .section-description {
+      margin: 0 0 20px;
+      color: #68788d;
+      line-height: 1.6;
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .variant-choice {
+      --variant-accent: #194776;
+      --variant-background: #f8fbff;
+      --variant-text: #183f6f;
+      --variant-border: #d8e3ef;
+
+      min-height: 128px;
+      padding: 20px;
+      border: 2px solid var(--variant-border);
+      border-top: 7px solid var(--variant-accent);
+      border-radius: 14px;
+      color: #183f6f;
+      background: #ffffff;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .variant-choice:hover {
+      border-color: var(--variant-accent);
+      background: #f8fbff;
+      transform: translateY(-3px);
+      box-shadow:
+        0 10px 22px
+        rgba(31, 68, 112, 0.13);
+    }
+
+    .variant-choice-name {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--variant-text);
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .variant-choice-summary {
+      display: block;
+      color: #66778d;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .variant-colour-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 7px 11px;
+      border: 2px solid var(--variant-border);
+      border-radius: 999px;
+      color: var(--variant-text);
+      background: var(--variant-background);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.35px;
+      text-transform: uppercase;
+    }
+
+    .variant-colour-badge-dot {
+      width: 15px;
+      height: 15px;
+      border: 2px solid #334155;
+      border-radius: 50%;
+      background: var(--variant-swatch);
+      box-shadow:
+        0 0 0 2px
+        rgba(255, 255, 255, 0.90);
+    }
+
+    .variant-colour-code {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: -8px 0 28px;
+      padding: 16px 20px;
+      border: 1px solid #dce5ef;
+      border-radius: 16px;
+      background: white;
+      box-shadow:
+        0 8px 24px
+        rgba(31, 68, 112, 0.08);
+    }
+
+    .variant-colour-code-title {
+      flex: 0 0 auto;
+      margin: 0;
+      color: #194776;
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .variant-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .variant-colour-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 7px 13px;
+      border: 2px solid;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: default;
+      user-select: none;
+    }
+
+    .variant-colour-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--tag-accent);
+      box-shadow:
+        0 0 0 2px
+        rgba(255, 255, 255, 0.85);
+    }
+
+
+    .comparison-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .comparison-card {
+      overflow: hidden;
+      border: 1px solid #dce5ef;
+      border-radius: 16px;
+      background: white;
+    }
+
+    .comparison-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 22px;
+      color: white;
+      background: #194776;
+    }
+
+    .comparison-header h3 {
+      margin: 0 0 4px;
+      font-size: 23px;
+    }
+
+    .comparison-header p {
+      margin: 0;
+      color: #d9eaff;
+      line-height: 1.45;
+    }
+
+    .select-variant-button {
+      flex: 0 0 auto;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid white;
+      border-radius: 9px;
+      color: #194776;
+      background: white;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .select-variant-button:hover {
+      color: white;
+      background: transparent;
+    }
+
+    .difference-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .difference-item {
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      gap: 22px;
+      padding: 20px 22px;
+      border-top: 1px solid #e2e8f0;
+      align-items: center;
+    }
+
+    .difference-item:first-child {
+      border-top: none;
+    }
+
+    .difference-picture {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 150px;
+      overflow: hidden;
+      border: 1px solid #e0e6ed;
+      border-radius: 11px;
+      background: #f3f6f9;
+    }
+
+    .difference-picture img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: white;
+      cursor: zoom-in;
+    }
+
+    .picture-placeholder {
+      padding: 18px;
+      color: #8090a4;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .difference-information h4 {
+      margin: 0 0 8px;
+      color: #183f6f;
+      font-size: 19px;
+    }
+
+    .part-number {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      color: #334a67;
+      background: #edf2f7;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .difference-information p {
+      margin: 0;
+      color: #627288;
+      line-height: 1.6;
+    }
+
+    .no-difference {
+      padding: 22px;
+      color: #68788d;
+      background: #f8fafc;
+    }
+
+    .loading-message,
+    .error-message {
+      padding: 35px;
+      border-radius: 14px;
+      text-align: center;
+      background: white;
+    }
+
+    .error-message {
+      color: #b42318;
+      background: #fff1f1;
+      border: 1px solid #ffc7c7;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      vertical-align: middle;
+      border: 4px solid #d6e4f2;
+      border-top-color: #194776;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .image-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(9, 24, 42, 0.88);
+    }
+
+    .image-modal.open {
+      display: flex;
+    }
+
+    .modal-image {
+      max-width: 96vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 10px;
+      background: white;
+    }
+
+    .modal-close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+      color: white;
+      background: rgba(255,255,255,0.12);
+      font-size: 27px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 950px) {
+      .variant-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 16px 10px 35px;
+      }
+
+      .page-heading,
+      .selection-section,
+      .comparison-section {
+        padding: 20px;
+      }
+
+      .page-heading h1 {
+        font-size: 27px;
+      }
+
+      .variant-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .variant-colour-code {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 11px;
+        padding: 15px;
+      }
+
+      .variant-colour-code-title {
+        white-space: normal;
+      }
+
+      .comparison-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .difference-item {
+        grid-template-columns: 1fr;
+      }
+
+      .difference-picture {
+        height: 210px;
+      }
+    }
+  
+    /* Floating Go to Top button */
+    .global-back-to-top-button {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 112px;
+      min-height: 48px;
+      padding: 0 17px;
+      border: 2px solid #ffffff;
+      border-radius: 999px;
+      color: #ffffff;
+      background: #194776;
+      box-shadow:
+        0 10px 28px
+        rgba(25, 71, 118, 0.30);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(14px);
+      transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .global-back-to-top-button.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .global-back-to-top-button:hover,
+    .global-back-to-top-button:focus-visible {
+      outline: none;
+      background: #28679e;
+    }
+
+    .global-back-to-top-arrow {
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    @media (max-width: 700px) {
+      .global-back-to-top-button {
+        right: 14px;
+        bottom: 14px;
+        min-width: 52px;
+        min-height: 52px;
+        padding: 0;
+      }
+
+      .global-back-to-top-text {
+        display: none;
+      }
+    }
+
+  </style>
+
+  <?php require __DIR__ . '/theme.php'; ?>
+<link rel="stylesheet" href="model-selection.css?v=<?=filemtime(__DIR__.'/model-selection.css')?>">
+<link rel="stylesheet" href="catalogue-details.css?v=<?=filemtime(__DIR__.'/catalogue-details.css')?>">
+<script src="api-client.js?v=<?=filemtime(__DIR__.'/api-client.js')?>" defer></script>
+</head>
+
+<body class="catalogue-detail detail-variants">
+
+  <div class="page-container">
+
+    <button
+      class="back-button"
+      type="button"
+      onclick="returnHome()"
+    >
+      ← Back to Home
+    </button>
+
+    <header class="page-heading"><p class="detail-eyebrow"><span>02</span> Variant selection <i aria-hidden="true"></i> <?=htmlspecialchars(visPlants()[visPlant()],ENT_QUOTES)?></p>
+      <h1>Select Variant</h1>
+
+      <p
+        id="selectionPath"
+        class="selection-path"
+      ></p>
+    </header>
+
+    <main id="content">
+      <div class="loading-message">
+        <span class="spinner"></span>
+        Loading variants and comparison information...
+      </div>
+    </main>
+
+  </div>
+
+  <div
+    id="imageModal"
+    class="image-modal"
+    onclick="closeImageModal(event)"
+  >
+    <button
+      class="modal-close"
+      type="button"
+      aria-label="Close image"
+      onclick="closeImageModal(event)"
+    >
+      ×
+    </button>
+
+    <img
+      id="modalImage"
+      class="modal-image"
+      alt="Enlarged variant picture"
+    >
+  </div>
+
+  <script>
+    const WEB_APP_URL =
+      <?php echo json_encode(rtrim(str_replace('\\','/',dirname($_SERVER['SCRIPT_NAME'])),'/').'/index.php', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+
+    const SELECTED_MODEL =
+      <?php echo json_encode(($_GET['model'] ?? ''), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      loadVariantPage
+    );
+
+
+    function loadVariantPage() {
+      document.getElementById(
+        'selectionPath'
+      ).textContent =
+        SELECTED_MODEL +
+        ' → Choose a variant';
+
+      if (!SELECTED_MODEL) {
+        showError(
+          'Model information is incomplete.'
+        );
+        return;
+      }
+
+      google.script.run
+        .withSuccessHandler(displayVariantPage)
+        .withFailureHandler(function (error) {
+          showError(
+            error && error.message
+              ? error.message
+              : 'Unable to load the variants.'
+          );
+        })
+        .getVariantPage(
+          SELECTED_MODEL
+        );
+    }
+
+
+    function displayVariantPage(response) {
+      const content =
+        document.getElementById('content');
+
+      content.innerHTML = '';
+
+      if (!response || !response.found) {
+        showError(
+          response && response.message
+            ? response.message
+            : 'No variants were found.'
+        );
+        return;
+      }
+
+      const selectionSection =
+        document.createElement('section');
+
+      selectionSection.className =
+        'selection-section';
+
+      selectionSection.innerHTML =
+        '<h2 class="section-title">Choose Variant</h2>' +
+        '<p class="section-description">' +
+          'Click a variant to continue. Variants with multiple grades will show a grade-selection page.' +
+        '</p>';
+
+      const variantGrid =
+        document.createElement('div');
+
+      variantGrid.className =
+        'variant-grid';
+
+      response.variants.forEach(function (
+        variant
+      ) {
+        const choice =
+          document.createElement('button');
+
+        choice.className =
+  'variant-choice';
+
+choice.style.setProperty(
+  '--variant-accent',
+  variant.accentColour ||
+  '#194776'
+);
+
+choice.style.setProperty(
+  '--variant-background',
+  variant.backgroundColour ||
+  '#f8fbff'
+);
+
+choice.style.setProperty(
+  '--variant-swatch',
+  variant.swatchColour ||
+  variant.accentColour ||
+  '#FFFFFF'
+);
+
+choice.style.setProperty(
+  '--variant-text',
+  variant.textColour ||
+  '#183f6f'
+);
+
+choice.style.setProperty(
+  '--variant-border',
+  variant.borderColour ||
+  '#d8e3ef'
+);
+
+choice.type = 'button';
+
+        choice.innerHTML =
+          '<span class="variant-choice-name">' +
+            escapeHtml(variant.label) +
+          '</span>' +
+          '<span class="variant-choice-summary">' +
+            escapeHtml(variant.summary) +
+          '</span>' +
+          '<span class="variant-colour-badge">' +
+            '<span class="variant-colour-badge-dot"></span>' +
+            'Tag Paper: ' +
+            escapeHtml(
+              variant.colourName || 'WHITE'
+            ) +
+          '</span>';
+
+        choice.onclick = function () {
+          openNextPage(variant);
+        };
+
+        variantGrid.appendChild(choice);
+      });
+
+      selectionSection.appendChild(
+        variantGrid
+      );
+
+      content.appendChild(
+        selectionSection
+      );
+
+      /*
+       * Show the comparison section only when the selected
+       * model has two or more variants.
+       *
+       * X70 currently has only MC3, so the
+       * "What Is Different About the Variants?" section
+       * will be hidden automatically.
+       */
+      if (
+        response.variants &&
+        response.variants.length > 1
+      ) {
+        const comparisonSection =
+          document.createElement('section');
+
+        comparisonSection.className =
+          'comparison-section';
+
+        comparisonSection.innerHTML =
+          '<h2 class="section-title">' +
+            'What Is Different About the Variants?' +
+          '</h2>' +
+          '<p class="section-description">' +
+            'The variants are shown vertically for easier comparison.' +
+          '</p>';
+
+        const comparisonList =
+          document.createElement('div');
+
+        comparisonList.className =
+          'comparison-list';
+
+        response.variants.forEach(function (
+          variant
+        ) {
+          comparisonList.appendChild(
+            buildComparisonCard(variant)
+          );
+        });
+
+        comparisonSection.appendChild(
+          comparisonList
+        );
+
+        content.appendChild(
+          comparisonSection
+        );
+      }
+    }
+
+
+    function buildVariantColourCode(
+      variants
+    ) {
+      const section =
+        document.createElement('section');
+
+      section.className =
+        'variant-colour-code';
+
+      const title =
+        document.createElement('p');
+
+      title.className =
+        'variant-colour-code-title';
+
+      title.textContent =
+        'Tag Paper Colour Code';
+
+      const tagList =
+        document.createElement('div');
+
+      tagList.className =
+        'variant-tag-list';
+
+      variants.forEach(function (
+        variant
+      ) {
+        const tag =
+          document.createElement('span');
+
+        tag.className =
+          'variant-colour-tag';
+
+        tag.style.color =
+          variant.textColour ||
+          '#194776';
+
+        tag.style.borderColor =
+          variant.borderColour ||
+          '#94A3B8';
+
+        tag.style.backgroundColor =
+          variant.backgroundColour ||
+          '#FFFFFF';
+
+        tag.style.setProperty(
+          '--tag-accent',
+          variant.accentColour ||
+          '#94A3B8'
+        );
+
+        const dot =
+          document.createElement('span');
+
+        dot.className =
+          'variant-colour-dot';
+
+        const text =
+          document.createElement('span');
+
+        text.textContent =
+          variant.label;
+
+        tag.appendChild(dot);
+        tag.appendChild(text);
+
+        tagList.appendChild(tag);
+      });
+
+      section.appendChild(title);
+      section.appendChild(tagList);
+
+      return section;
+    }
+
+
+    function buildComparisonCard(variant) {
+      const card =
+        document.createElement('article');
+
+      card.className =
+        'comparison-card';
+
+      card.style.borderLeft =
+        '7px solid ' +
+        (
+          variant.accentColour ||
+          '#194776'
+        );
+
+      const header =
+        document.createElement('div');
+
+      header.className =
+        'comparison-header';
+
+      const headerInformation =
+        document.createElement('div');
+
+      const title =
+        document.createElement('h3');
+
+      title.textContent =
+        variant.label;
+
+      const summary =
+        document.createElement('p');
+
+      summary.textContent =
+        variant.summary;
+
+      headerInformation.appendChild(title);
+      headerInformation.appendChild(summary);
+
+      const selectButton =
+        document.createElement('button');
+
+      selectButton.className =
+        'select-variant-button';
+
+      selectButton.type = 'button';
+
+      selectButton.textContent =
+        'Select ' + variant.label;
+
+      selectButton.onclick = function () {
+        openNextPage(variant);
+      };
+
+      header.appendChild(
+        headerInformation
+      );
+
+      header.appendChild(
+        selectButton
+      );
+
+      card.appendChild(header);
+
+      const differenceList =
+        document.createElement('div');
+
+      differenceList.className =
+        'difference-list';
+
+      if (
+        !variant.differences ||
+        variant.differences.length === 0
+      ) {
+        const empty =
+          document.createElement('div');
+
+        empty.className =
+          'no-difference';
+
+        empty.textContent =
+          variant.summary;
+
+        differenceList.appendChild(empty);
+      } else {
+        variant.differences.forEach(function (
+          difference
+        ) {
+          differenceList.appendChild(
+            buildDifferenceItem(difference)
+          );
+        });
+      }
+
+      card.appendChild(
+        differenceList
+      );
+
+      return card;
+    }
+
+
+    function buildDifferenceItem(difference) {
+      const item =
+        document.createElement('div');
+
+      item.className =
+        'difference-item';
+
+      const picture =
+        document.createElement('div');
+
+      picture.className =
+        'difference-picture';
+
+      if (difference.imageUrl) {
+        const image =
+          document.createElement('img');
+
+        image.src =
+          difference.imageUrl;
+
+        image.alt =
+          difference.pictureName ||
+          'Variant difference picture';
+
+        image.title =
+          'Click to enlarge';
+
+        image.onclick = function () {
+          openImageModal(
+            difference.imageUrl,
+            difference.pictureName
+          );
+        };
+
+        image.onerror = function () {
+          picture.innerHTML =
+            '<div class="picture-placeholder">' +
+              'Picture unavailable.<br>' +
+              'Check the Drive link and permission.' +
+            '</div>';
+        };
+
+        picture.appendChild(image);
+      } else {
+        picture.innerHTML =
+          '<div class="picture-placeholder">' +
+            'Add the Google Drive picture link in ' +
+            'VARIANT_DIFFERENCE.' +
+          '</div>';
+      }
+
+      const information =
+        document.createElement('div');
+
+      information.className =
+        'difference-information';
+
+      const partName =
+        document.createElement('h4');
+
+      partName.textContent =
+        difference.pictureName ||
+        'Variant Difference';
+
+      information.appendChild(partName);
+
+      if (difference.partNumber) {
+        const partNumber =
+          document.createElement('span');
+
+        partNumber.className =
+          'part-number';
+
+        partNumber.textContent =
+          difference.partNumber;
+
+        information.appendChild(
+          partNumber
+        );
+      }
+
+      if (difference.differenceNote) {
+        const note =
+          document.createElement('p');
+
+        note.textContent =
+          difference.differenceNote;
+
+        information.appendChild(note);
+      }
+
+      item.appendChild(picture);
+      item.appendChild(information);
+
+      return item;
+    }
+
+
+    function openNextPage(variant) {
+      if (
+        variant &&
+        variant.gradeCount === 1 &&
+        variant.defaultGrade
+      ) {
+        openModulePage(
+          variant.code,
+          variant.defaultGrade
+        );
+
+        return;
+      }
+
+      openGradePage(
+        variant.code
+      );
+    }
+
+
+    function openGradePage(variantCode) {
+      const gradePageUrl =
+        WEB_APP_URL +
+        '?page=grades' +
+        '&model=' +
+        encodeURIComponent(
+          SELECTED_MODEL
+        ) +
+        '&variant=' +
+        encodeURIComponent(
+          variantCode
+        );
+
+      window.top.location.href =
+        window.visPlantUrl(gradePageUrl);
+    }
+
+
+    function openModulePage(
+      variantCode,
+      gradeCode
+    ) {
+      const modulePageUrl =
+        WEB_APP_URL +
+        '?page=modules' +
+        '&model=' +
+        encodeURIComponent(
+          SELECTED_MODEL
+        ) +
+        '&variant=' +
+        encodeURIComponent(
+          variantCode
+        ) +
+        '&grade=' +
+        encodeURIComponent(
+          gradeCode
+        );
+
+      window.top.location.href =
+        window.visPlantUrl(modulePageUrl);
+    }
+
+
+    function openImageModal(
+      imageUrl,
+      altText
+    ) {
+      document.getElementById(
+        'modalImage'
+      ).src = imageUrl;
+
+      document.getElementById(
+        'modalImage'
+      ).alt =
+        altText ||
+        'Enlarged variant picture';
+
+      document.getElementById(
+        'imageModal'
+      ).classList.add('open');
+
+      document.body.style.overflow =
+        'hidden';
+    }
+
+
+    function closeImageModal(event) {
+      if (
+        event &&
+        event.target &&
+        event.target.id === 'modalImage'
+      ) {
+        return;
+      }
+
+      document.getElementById(
+        'imageModal'
+      ).classList.remove('open');
+
+      document.getElementById(
+        'modalImage'
+      ).src = '';
+
+      document.body.style.overflow = '';
+    }
+
+
+    document.addEventListener(
+      'keydown',
+      function (event) {
+        if (event.key === 'Escape') {
+          closeImageModal();
+        }
+      }
+    );
+
+
+    function showError(messageText) {
+      const content =
+        document.getElementById('content');
+
+      content.innerHTML = '';
+
+      const message =
+        document.createElement('div');
+
+      message.className =
+        'error-message';
+
+      message.textContent =
+        messageText;
+
+      content.appendChild(message);
+    }
+
+
+    function returnHome() {
+      window.top.location.href =
+        window.visPlantUrl(WEB_APP_URL);
+    }
+
+
+    function escapeHtml(value) {
+      const element =
+        document.createElement('div');
+
+      element.textContent =
+        String(value || '');
+
+      return element.innerHTML;
+    }
+  </script>
+
+
+  <button
+    id="globalBackToTopButton"
+    class="global-back-to-top-button"
+    type="button"
+    aria-label="Go to top of page"
+    title="Go to top"
+  >
+    <span class="global-back-to-top-arrow">↑</span>
+    <span class="global-back-to-top-text">Go to Top</span>
+  </button>
+
+  <script>
+    (function () {
+      const button =
+        document.getElementById(
+          'globalBackToTopButton'
+        );
+
+      if (!button) {
+        return;
+      }
+
+      function updateBackToTopButton() {
+        const pageCanScroll =
+          document.documentElement.scrollHeight >
+          window.innerHeight + 80;
+
+        const hasScrolledDown =
+          window.scrollY > 320;
+
+        button.classList.toggle(
+          'show',
+          pageCanScroll && hasScrolledDown
+        );
+      }
+
+      button.addEventListener(
+        'click',
+        function () {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      );
+
+      window.addEventListener(
+        'scroll',
+        updateBackToTopButton,
+        { passive: true }
+      );
+
+      window.addEventListener(
+        'resize',
+        updateBackToTopButton
+      );
+
+      document.addEventListener(
+        'DOMContentLoaded',
+        updateBackToTopButton
+      );
+
+      updateBackToTopButton();
+    })();
+  </script>
+
+<script src="vis-last-updated.js?v=<?=filemtime(__DIR__.'/vis-last-updated.js')?>" defer></script>
+</body>
+</html>

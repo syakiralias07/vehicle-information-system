@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html><head></head><body><pre id="result">PASS header has Home
+PASS redundant Change Plant removed
+PASS Home remains plant menu after click handler
+PASS brand opens plant menu
+PASS header has Home
+PASS redundant Change Plant removed
+PASS Home remains plant menu after click handler
+PASS brand opens plant menu
+PASS Model progress retains selected plant
+PASS header has Home
+PASS redundant Change Plant removed
+PASS Home remains plant menu after click handler
+PASS brand opens plant menu
+PASS Model progress retains selected plant
+ALL PASS</pre><script>
+(async()=>{let lines=[];const check=(v,m)=>{if(!v)throw Error(m);lines.push('PASS '+m)};try{for(const url of ['index.php?plant=fif','index.php?page=variants&model=X50&plant=fif','index.php?page=results&model=X50&variant=FL&grade=STANDARD&module=ER&plant=fif']){const f=document.createElement('iframe');document.body.append(f);await new Promise(r=>{f.onload=r;f.src=url});await new Promise(r=>setTimeout(r,300));const d=f.contentDocument,home=d.querySelector('.app-home-button');check(home?.textContent.includes('Home'),'header has Home');check(d.querySelectorAll('.app-topbar-actions .app-home-button').length===1,'redundant Change Plant removed');home.addEventListener('click',e=>e.preventDefault());home.click();check(new URL(home.href).search==='','Home remains plant menu after click handler');const brand=d.querySelector('.app-brand');brand.addEventListener('click',e=>e.preventDefault());brand.click();check(new URL(brand.href).search==='','brand opens plant menu');const model=d.querySelector('.app-progress-step');if(model.href)check(new URL(model.href).searchParams.get('plant')==='fif','Model progress retains selected plant');f.remove()}document.getElementById('result').textContent=lines.join('\n')+'\nALL PASS'}catch(e){document.getElementById('result').textContent=lines.join('\n')+'\nFAIL '+e.stack}})();</script>
+</body></html>
